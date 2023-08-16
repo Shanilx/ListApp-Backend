@@ -1,0 +1,34 @@
+endingFields[$componentAlias][] = $field;
+            }
+        }
+    }
+
+    /**
+     * parseClause
+     * parses given DQL clause
+     *
+     * this method handles five tasks:
+     *
+     * 1. Converts all DQL functions to their native SQL equivalents
+     * 2. Converts all component references to their table alias equivalents
+     * 3. Converts all field names to actual column names
+     * 4. Quotes all identifiers
+     * 5. Parses nested clauses and subqueries recursively
+     *
+     * @return string   SQL string
+     * @todo Description: What is a 'dql clause' (and what not)?
+     *       Refactor: Too long & nesting level
+     */
+    public function parseClause($clause)
+    {
+        $clause = $this->_conn->dataDict->parseBoolean(trim($clause));
+
+        if (is_numeric($clause)) {
+           return $clause;
+        }
+
+        $terms = $this->_tokenizer->clauseExplode($clause, array(' ', '+', '-', '*', '/', '<', '>', '=', '>=', '<=', '&', '|'));
+        $str = '';
+
+        foreach ($terms as $term) {
+       

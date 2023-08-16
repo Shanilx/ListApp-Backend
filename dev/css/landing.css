@@ -1,0 +1,328 @@
+body, html
+{
+	font-family: 'Open Sans',sans-serif;
+	/*background: #e9e7e7;*/
+}
+/*nav bar css*/
+
+header {
+    border-top: 10px solid #c90016;
+}
+.navbar
+{
+	margin-bottom: 0px;
+
+}
+header .navbar-default
+{
+	background: #fff;
+	border: none;
+}
+.navbar-brand
+{
+	height: auto;
+}
+header .navbar-right
+{
+	margin-top: 40px;
+}
+header .navbar-right a
+{
+	font-size: 24px;
+	color: #000 !important;
+	font-weight: 800;
+}
+header .navbar-right a span
+{
+	font-size: 24px;
+	color: #f26522;
+	font-weight: 800;
+}
+
+/*main section css*/
+#landing_main_head
+{
+	background: url('../../images/landing/home_back.jpg');
+	background-size: cover;
+	background-position:center center;
+	width: 100%;
+	padding: 100px 0; 
+}
+#landing_main_head .sec_title
+{
+   font-size: 48px;
+   color: #fff;
+   font-weight: 800;
+   text-transform: uppercase;
+
+}
+#landing_main_head .sec_para 
+{
+	font-size: 36px;
+	color: #fff;
+	font-weight: normal;
+}
+.landing_form_head 
+{
+	background: #f26522;
+	width: 100%;
+	height: auto;
+	text-align: center;
+	padding: 10px 0;
+}
+.landing_form_head h3
+{
+	text-align: center;
+	color: #fff;
+	margin: 0px;
+	font-size: 24px;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+.landing_home_form
+{
+	background: #efefef;
+	box-shadow: 1px 2px 3px #272727;
+}
+.landing_form_main
+{
+	padding: 20px 20px;
+}
+.landing_form_main input
+{
+	margin-bottom: 10px;
+	border-radius: 0px;
+	background: #dddddd;
+	border: none;
+	height: 44px;
+	box-shadow: none;
+
+}
+.landing_form_main input:focus
+{
+	border-color: transparent;
+	box-shadow: none;
+}
+.landing_form_main .btn_new
+{
+	background: #F26522;
+	color: #fff;
+	font-size: 24px;
+	font-weight: normal;
+	text-transform: uppercase;
+	transition-duration: 0.5s;
+	line-height: 0px;
+}
+.landing_form_main .btn_new:hover
+{
+	background: #272727;
+
+}
+.landing_form_main input::-moz-placeholder
+ 
+{
+ color:#8d8d8d;
+ font-size: 18px;
+ font-weight: normal;
+}
+.landing_form_main input::-webkit-input-placeholder 
+{
+ color:#8d8d8d;
+ font-size: 18px;
+ font-weight: normal;
+}
+.copy_sec_landing
+{
+	text-align: center;	
+	padding: 5px 0px;
+	background: #C90016;
+}
+.copy_sec_landing p
+{
+	margin: 0px;
+	color: #fff;
+}
+.ser_new
+{
+	background: #efefef;
+	text-align: center;
+	padding: 20px 25px;
+}
+.ser_new p
+{
+	color: #575959;
+	font-size:15px;
+	font-weight: normal;
+}
+.ser_new h3
+{
+	font-size: 24px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #06ACA8;
+	margin-top: 5px;
+}
+.ser_new2 h3
+{
+	font-size: 24px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #fff;
+	margin-top: 5px;
+}
+.ser_new2 p
+{
+	color: #fff;
+	font-size:15px;
+	font-weight: normal;
+}
+.ser_new2
+{
+	background: #06aca8;
+	text-align: center;
+	padding: 20px 25px;
+}
+
+.nopad
+{
+	padding: 0px;
+}
+
+/*form page css*/
+#landing_head_form
+{
+background: url('../../images/landing/form_back.jpg');
+padding: 120px 0px 0px 0px; 
+}
+.form_title h3
+{
+	font-size: 48px;
+	color: #fff;
+	font-weight: 300;
+	margin-bottom: 20px;
+}
+#landing_form_main
+{
+	padding: 50px 0px;
+	display: inline-block;
+	width: 100%;
+}
+.landing_form_box .tb_main
+{
+	background: #fff;
+	
+	
+	margin-bottom:10px;  
+	height: 50px;
+	padding: 0 10px;
+	border: none;
+	background: #fff;
+	border-radius: 10px;
+}
+.form_box_new
+{
+	float: left;
+	width: 48%;
+	margin-right: 10px;
+}
+.box_big
+{
+	resize: none;
+	height: 140px !important;
+	padding: 10px 10px !important;
+
+}
+.sub_btn_new
+{
+	background: #f26522;
+	font-size: 18px;
+	color: #ffffff;
+	font-weight: bold;
+	line-height: 0px;
+}
+.sub_btn_new
+{
+	width: 200px;
+	background: #f26522;
+	height:47px;
+	border-radius: 10px;
+	border: none;
+	float: right;
+	margin-right:31px; 
+}
+.form_box_new span
+{
+	font-weight: bold;
+	margin-bottom:5px;	
+	display: inline-block;
+	margin-left: 5px;   
+}
+/*.landing_form_box select
+{
+-moz-appearance: none;
+-webkit-appearance:none;
+appearance:none;
+}*/
+
+/*thank you page css*/
+#landing_thankyou
+{
+	padding: 300px 0 0 0;
+	background: url('../../images/landing/thank_back.jpg');
+	background-size:cover;
+	background-position: center; 
+}
+.thankyou_main {
+    padding: 50px 0;
+}
+.landing_thankyou_head h2
+{
+	font-size: 48px;
+	font-weight: 300;color: #fff;
+	margin-bottom: 20px;
+}
+.thankyou_main h1
+{
+	color: #c90016;
+	font-size: 36px;
+	font-weight: bold;
+}
+.thankyou_main p
+{
+	font-size: 16px;
+	color: #1a1a1a;
+	font-weight: normal;
+	margin-bottom: 20px;
+}
+.thankyou_main h3
+{
+	color: #c90016;
+	font-weight: bold;
+	font-size: 18px;
+}
+.thankyou_main h2
+{
+	color: #000;
+	font-weight: bold;
+	font-size: 30px;
+	margin-top: 40px;
+}
+.thankyou_main h4
+{
+color: #06aca8;
+	font-weight: bold;
+	font-size: 	24px;
+	margin-bottom: 10px;	
+}
+.thankyou_main h5
+{
+color: #1a1a1a;
+	font-weight: 300;
+	font-size: 	18px;
+	margin-top: 0px;	
+}
+
+.gender_btns input {
+    margin-left: 0;
+    margin-right: 10px;
+} 

@@ -1,0 +1,129 @@
+ the component
+        $manager = Doctrine_Manager::getInstance();
+        if ( ! $this->_passedConn && $manager->hasConnectionForComponent($name)) {
+            $this->_conn = $manager->getConnectionForComponent($name);
+        }
+
+        $table = $this->_conn->getTable($name);
+        $tableName = $table->getTableName();
+
+        // get the short alias for this table
+        $tableAlias = $this->getSqlTableAlias($componentAlias, $tableName);
+        // quote table name
+        $queryPart = $this->_conn->quoteIdentifier($tableName);
+
+        if ($this->_type === self::SELECT) {
+            $queryPart .= ' ' . $this->_conn->quoteIdentifier($tableAlias);
+        }
+
+        $this->_tableAliasMap[$tableAlias] = $componentAlias;
+
+        $queryPart .= $this->buildInheritanceJoinSql($name, $componentAlias);
+
+        $this->_sqlParts['from'][] = $queryPart;
+
+        $this->_queryComponents[$componentAlias] = array('table' => $table, 'map' => null);
+
+        return $table;
+    }
+
+    /**
+     * @todo DESCRIBE ME!
+     * @param string $name              component class name
+     * @param string $componentAlias    alias of the component in the dql
+     * @return string                   query part
+     */
+    public function buildInheritanceJoinSql($name, $componentAlias)
+    {
+        // get the connection for the component
+        $manager = Doctrine_Manager::getInstance();
+        if ( ! $this->_passedConn && $manager->hasConnectionForComponent($name)) {
+            $this->_conn = $manager->getConnectionForComponent($name);
+        }
+
+        $table = $this->_conn->getTable($name);
+        $tableName = $table->getTableName();
+
+        // get the short alias for this table
+        $tableAlias = $this->getSqlTableAlias($componentAlias, $tableName);
+
+        $queryPart = '';
+
+        foreach ($table->getOption('joinedParents') as $parent) {
+            $parentTable = $this->_conn->getTable($parent);
+
+            $parentAlias = $componentAlias . '.' . $parent;
+
+            // get the short alias for the parent table
+            $parentTableAlias = $this->getSqlTableAlias($parentAlias, $parentTable->getTableName());
+
+            $queryPart .= ' LEFT JOIN ' . $this->_conn->quoteIdentifier($parentTable->getTableName())
+                        . ' ' . $this->_conn->quoteIdentifier($parentTableAlias) . ' ON ';
+
+            //Doctrine_Core::dump($table->getIdentifier());
+            foreach ((array) $table->getIdentifier() as $identifier) {
+                $column = $table->getColumnName($identifier);
+
+                $queryPart .= $this->_conn->quoteIdentifier($tableAlias)
+                            . '.' . $this->_conn->quoteIdentifier($column)
+                            . ' = ' . $this->_conn->quoteIdentifier($parentTableAlias)
+                            . '.' . $this->_conn->quoteIdentifier($column);
+            }
+        }
+
+        return $queryPart;
+    }
+
+    /**
+     * Get count sql query for this Doctrine_Query instance.
+     *
+     * This method is used in Doctrine_Query::count() for returning an integer
+     * for the number of records which will be returned when executed.
+     *
+     * @return string $q
+     */
+    public function getCountSqlQuery()
+    {
+        // triggers dql parsing/processing
+        $this->getSqlQuery(array(), false); // this is ugly
+
+        // initialize temporary variables
+        $where   = $this->_sqlParts['where'];
+        $having  = $this->_sqlParts['having'];
+        $groupby = $this->_sqlParts['groupby'];
+
+        $rootAlias = $this->getRootAlias();
+        $tableAlias = $this->getSqlTableAlias($rootAlias);
+
+        // Build the query base
+        $q = 'SELECT COUNT(*) AS ' . $this->_conn->quoteIdentifier('num_results') . ' FROM ';
+
+        // Build the from clause
+        $from = $this->_buildSqlFromPart(true);
+
+        // Build the where clause
+        $where = ( ! empty($where)) ? ' WHERE ' . implode(' ', $where) : '';
+
+        // Build the group by clause
+        $groupby = ( ! empty($groupby)) ? ' GROUP BY ' . implode(', ', $groupby) : '';
+
+        // Build the having clause
+        $having = ( ! empty($having)) ? ' HAVING ' . implode(' AND ', $having) : '';
+
+        // Building the from clause and finishing query
+        if (count($this->_queryComponents) == 1 && empty($having)) {
+            $q .= $from . $where . $groupby . $having;
+        } else {
+            // Subselect fields will contain only the pk of root entity
+            $ta = $this->_conn->quoteIdentifier($tableAlias);
+
+            $map = $this->getRootDeclaration();
+            $idColumnNames = $map['table']->getIdentifierColumnNames();
+
+            $pkFields = $ta . '.' . implode(', ' . $ta . '.', $this->_conn->quoteMultipleIdentifier($idColumnNames));
+
+            // We need to do some magic in select fields if the query contain anything in having clause
+            $selectFields = $pkFields;
+
+            if ( ! empty($having)) {
+                // For each field defi

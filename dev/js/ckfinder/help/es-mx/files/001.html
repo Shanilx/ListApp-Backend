@@ -1,0 +1,40 @@
+omponents[$alias]['relation']->getType() == Doctrine_Relation::ONE){
+                        continue;
+                    }
+
+                    $this->_isLimitSubqueryUsed = true;
+                    $needsSubQuery = true;
+                }
+            }
+        }
+
+        $sql = array();
+
+        if ( ! empty($this->_pendingFields)) {
+            foreach ($this->_queryComponents as $alias => $map) {
+                $fieldSql = $this->processPendingFields($alias);
+                if ( ! empty($fieldSql)) {
+                    $sql[] = $fieldSql;
+                }
+            }
+        }
+
+        if ( ! empty($sql)) {
+            array_unshift($this->_sqlParts['select'], implode(', ', $sql));
+        }
+
+        $this->_pendingFields = array();
+
+        // build the basic query
+        $q  = $this->_buildSqlQueryBase();
+        $q .= $this->_buildSqlFromPart();
+
+        if ( ! empty($this->_sqlParts['set'])) {
+            $q .= ' SET ' . implode(', ', $this->_sqlParts['set']);
+        }
+
+        $string = $this->getInheritanceCondition($this->getRootAlias());
+
+        // apply inheritance to WHERE part
+        if ( ! empty($string)) {
+    

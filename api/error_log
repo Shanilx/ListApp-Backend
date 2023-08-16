@@ -1,0 +1,316 @@
+[29-Oct-2021 13:36:16 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of Error given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(Error))
+#1 [internal function]: _exception_handler(Object(Error))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[29-Oct-2021 13:38:39 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of Error given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(Error))
+#1 [internal function]: _exception_handler(Object(Error))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[29-Oct-2021 13:38:41 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of Error given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(Error))
+#1 [internal function]: _exception_handler(Object(Error))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[29-Oct-2021 13:38:41 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of Error given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(Error))
+#1 [internal function]: _exception_handler(Object(Error))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[29-Oct-2021 13:40:18 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of Error given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(Error))
+#1 [internal function]: _exception_handler(Object(Error))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[29-Oct-2021 13:41:46 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of Error given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(Error))
+#1 [internal function]: _exception_handler(Object(Error))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[29-Oct-2021 13:41:47 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of Error given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(Error))
+#1 [internal function]: _exception_handler(Object(Error))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[29-Oct-2021 13:41:50 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of Error given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(Error))
+#1 [internal function]: _exception_handler(Object(Error))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[29-Oct-2021 13:41:51 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of Error given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(Error))
+#1 [internal function]: _exception_handler(Object(Error))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[29-Oct-2021 13:41:54 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of Error given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(Error))
+#1 [internal function]: _exception_handler(Object(Error))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[29-Oct-2021 13:41:55 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of Error given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(Error))
+#1 [internal function]: _exception_handler(Object(Error))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[29-Oct-2021 13:42:45 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of Error given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(Error))
+#1 [internal function]: _exception_handler(Object(Error))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[29-Oct-2021 13:42:47 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of Error given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(Error))
+#1 [internal function]: _exception_handler(Object(Error))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[29-Oct-2021 13:42:48 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of Error given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(Error))
+#1 [internal function]: _exception_handler(Object(Error))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[29-Oct-2021 13:42:49 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of Error given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(Error))
+#1 [internal function]: _exception_handler(Object(Error))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[29-Oct-2021 13:48:43 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of ParseError given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(ParseError))
+#1 [internal function]: _exception_handler(Object(ParseError))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[29-Oct-2021 13:48:46 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of ParseError given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(ParseError))
+#1 [internal function]: _exception_handler(Object(ParseError))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[29-Oct-2021 13:48:47 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of ParseError given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(ParseError))
+#1 [internal function]: _exception_handler(Object(ParseError))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[29-Oct-2021 13:50:07 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of ParseError given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(ParseError))
+#1 [internal function]: _exception_handler(Object(ParseError))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[29-Oct-2021 13:50:08 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of ParseError given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(ParseError))
+#1 [internal function]: _exception_handler(Object(ParseError))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[29-Oct-2021 13:50:09 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of ParseError given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(ParseError))
+#1 [internal function]: _exception_handler(Object(ParseError))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[29-Oct-2021 13:50:10 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of ParseError given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(ParseError))
+#1 [internal function]: _exception_handler(Object(ParseError))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[29-Oct-2021 13:50:15 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of ParseError given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(ParseError))
+#1 [internal function]: _exception_handler(Object(ParseError))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[29-Oct-2021 13:50:19 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of ParseError given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(ParseError))
+#1 [internal function]: _exception_handler(Object(ParseError))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[29-Oct-2021 13:50:24 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of ParseError given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(ParseError))
+#1 [internal function]: _exception_handler(Object(ParseError))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[29-Oct-2021 13:50:26 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of ParseError given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(ParseError))
+#1 [internal function]: _exception_handler(Object(ParseError))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[29-Oct-2021 13:50:26 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of ParseError given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(ParseError))
+#1 [internal function]: _exception_handler(Object(ParseError))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[29-Oct-2021 13:50:27 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of ParseError given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(ParseError))
+#1 [internal function]: _exception_handler(Object(ParseError))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[01-Nov-2021 12:28:36 UTC] PHP Warning:  Unknown: Input variables exceeded 1000. To increase the limit change max_input_vars in php.ini. in Unknown on line 0
+[12-Jan-2022 09:24:33 UTC] PHP Warning:  Unterminated comment starting line 3207 in /home3/listapp/public_html/api/application/controllers/Login.php on line 3207
+[12-Jan-2022 09:24:33 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of ParseError given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(ParseError))
+#1 [internal function]: _exception_handler(Object(ParseError))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[17-Jan-2022 07:39:27 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of ParseError given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(ParseError))
+#1 [internal function]: _exception_handler(Object(ParseError))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[24-Jan-2022 06:25:24 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of ParseError given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(ParseError))
+#1 [internal function]: _exception_handler(Object(ParseError))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[23-Mar-2022 09:51:19 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of ParseError given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(ParseError))
+#1 [internal function]: _exception_handler(Object(ParseError))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[06-Feb-2023 19:32:58 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/helpers/common_helper.php on line 390
+[06-Feb-2023 19:32:58 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Shared/String.php on line 529
+[06-Feb-2023 19:32:58 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Shared/String.php on line 530
+[06-Feb-2023 19:32:58 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Shared/String.php on line 536
+[06-Feb-2023 19:32:58 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Shared/String.php on line 536
+[06-Feb-2023 19:32:58 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Shared/String.php on line 537
+[06-Feb-2023 19:32:58 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Shared/String.php on line 537
+[06-Feb-2023 19:32:58 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 2186
+[06-Feb-2023 19:32:58 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 2186
+[06-Feb-2023 19:32:58 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 2294
+[06-Feb-2023 19:32:58 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 2294
+[06-Feb-2023 19:32:58 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 2296
+[06-Feb-2023 19:32:58 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 2372
+[06-Feb-2023 19:32:58 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 2374
+[06-Feb-2023 19:32:58 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 2383
+[06-Feb-2023 19:32:58 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 2632
+[06-Feb-2023 19:32:58 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 2761
+[06-Feb-2023 19:32:58 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 2763
+[06-Feb-2023 19:32:58 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 2764
+[06-Feb-2023 19:32:58 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 3039
+[06-Feb-2023 19:32:58 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 3039
+[06-Feb-2023 19:32:58 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 3042
+[06-Feb-2023 19:32:58 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 3043
+[06-Feb-2023 19:32:58 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 3459
+[06-Feb-2023 19:32:58 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 3459
+[06-Feb-2023 19:32:58 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 3501
+[06-Feb-2023 19:32:58 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 3505
+[06-Feb-2023 19:32:58 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 3558
+[06-Feb-2023 19:32:58 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 3559
+[06-Feb-2023 19:32:58 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Worksheet/AutoFilter.php on line 729
+[06-Feb-2023 19:32:58 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Worksheet/AutoFilter.php on line 729
+[12-Feb-2023 21:00:28 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/helpers/common_helper.php on line 390
+[12-Feb-2023 21:00:28 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Shared/String.php on line 529
+[12-Feb-2023 21:00:28 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Shared/String.php on line 530
+[12-Feb-2023 21:00:28 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Shared/String.php on line 536
+[12-Feb-2023 21:00:28 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Shared/String.php on line 536
+[12-Feb-2023 21:00:28 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Shared/String.php on line 537
+[12-Feb-2023 21:00:28 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Shared/String.php on line 537
+[12-Feb-2023 21:00:28 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 2186
+[12-Feb-2023 21:00:28 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 2186
+[12-Feb-2023 21:00:28 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 2294
+[12-Feb-2023 21:00:28 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 2294
+[12-Feb-2023 21:00:28 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 2296
+[12-Feb-2023 21:00:28 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 2372
+[12-Feb-2023 21:00:28 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 2374
+[12-Feb-2023 21:00:28 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 2383
+[12-Feb-2023 21:00:28 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 2632
+[12-Feb-2023 21:00:28 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 2761
+[12-Feb-2023 21:00:28 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 2763
+[12-Feb-2023 21:00:28 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 2764
+[12-Feb-2023 21:00:28 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 3039
+[12-Feb-2023 21:00:28 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 3039
+[12-Feb-2023 21:00:28 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 3042
+[12-Feb-2023 21:00:28 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 3043
+[12-Feb-2023 21:00:28 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 3459
+[12-Feb-2023 21:00:28 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 3459
+[12-Feb-2023 21:00:28 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 3501
+[12-Feb-2023 21:00:28 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 3505
+[12-Feb-2023 21:00:28 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 3558
+[12-Feb-2023 21:00:28 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Calculation.php on line 3559
+[12-Feb-2023 21:00:28 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Worksheet/AutoFilter.php on line 729
+[12-Feb-2023 21:00:28 UTC] PHP Deprecated:  Array and string offset access syntax with curly braces is deprecated in /home3/listapp/public_html/api/application/libraries/PHPExcel/Worksheet/AutoFilter.php on line 729
+[18-May-2023 09:26:39 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of ParseError given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(ParseError))
+#1 [internal function]: _exception_handler(Object(ParseError))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[18-May-2023 09:26:42 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of ParseError given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(ParseError))
+#1 [internal function]: _exception_handler(Object(ParseError))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[18-May-2023 09:26:45 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of ParseError given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(ParseError))
+#1 [internal function]: _exception_handler(Object(ParseError))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[18-May-2023 09:26:46 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of ParseError given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(ParseError))
+#1 [internal function]: _exception_handler(Object(ParseError))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[18-May-2023 09:26:48 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of ParseError given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(ParseError))
+#1 [internal function]: _exception_handler(Object(ParseError))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[18-May-2023 09:26:50 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of ParseError given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(ParseError))
+#1 [internal function]: _exception_handler(Object(ParseError))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[18-May-2023 09:26:52 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of ParseError given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(ParseError))
+#1 [internal function]: _exception_handler(Object(ParseError))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[18-May-2023 09:26:54 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of ParseError given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(ParseError))
+#1 [internal function]: _exception_handler(Object(ParseError))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[18-May-2023 09:26:57 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of ParseError given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(ParseError))
+#1 [internal function]: _exception_handler(Object(ParseError))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190
+[18-May-2023 09:26:58 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to CI_Exceptions::show_exception() must be an instance of Exception, instance of ParseError given, called in /home3/listapp/public_html/api/system/core/Common.php on line 662 and defined in /home3/listapp/public_html/api/system/core/Exceptions.php:190
+Stack trace:
+#0 /home3/listapp/public_html/api/system/core/Common.php(662): CI_Exceptions->show_exception(Object(ParseError))
+#1 [internal function]: _exception_handler(Object(ParseError))
+#2 {main}
+  thrown in /home3/listapp/public_html/api/system/core/Exceptions.php on line 190

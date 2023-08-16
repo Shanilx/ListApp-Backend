@@ -1,0 +1,120 @@
+()
+                ->getAttribute(Doctrine_Core::ATTR_QUERY_CLASS);
+        }
+        return new $class($conn);
+    }
+
+    /**
+     * Clears all the sql parts.
+     */
+    protected function clear()
+    {
+        $this->_preQueried = false;
+        $this->_pendingJoinConditions = array();
+        $this->_state = self::STATE_DIRTY;
+    }
+
+    /**
+     * Resets the query to the state just after it has been instantiated.
+     */
+    public function reset()
+    {
+        $this->_subqueryAliases = array();
+        $this->_aggregateAliasMap = array();
+        $this->_pendingAggregates = array();
+        $this->_pendingSubqueries = array();
+        $this->_pendingFields = array();
+        $this->_neededTables = array();
+        $this->_expressionMap = array();
+        $this->_subqueryAliases = array();
+        $this->_needsSubquery = false;
+        $this->_isLimitSubqueryUsed = false;
+    }
+
+    /**
+     * createSubquery
+     * creates a subquery
+     *
+     * @return Doctrine_Hydrate
+     */
+    public function createSubquery()
+    {
+        $class = get_class($this);
+        $obj   = new $class();
+
+        // copy the aliases to the subquery
+        $obj->copySubqueryInfo($this);
+
+        // this prevents the 'id' being selected, re ticket #307
+        $obj->isSubquery(true);
+
+        return $obj;
+    }
+
+    /**
+     * addPendingJoinCondition
+     *
+     * @param string $componentAlias    component alias
+     * @param string $joinCondition     dql join condition
+     * @return Doctrine_Query           this object
+     */
+    public function addPendingJoinCondition($componentAlias, $joinCondition)
+    {
+        if ( ! isset($this->_pendingJoinConditions[$componentAlias])) {
+            $this->_pendingJoinConditions[$componentAlias] = array();
+        }
+
+        $this->_pendingJoinConditions[$componentAlias][] = $joinCondition;
+    }
+
+    /**
+     * fetchArray
+     * Convenience method to execute using array fetching as hydration mode.
+     *
+     * @param string $params
+     * @return array
+     */
+    public function fetchArray($params = array())
+    {
+        return $this->execute($params, Doctrine_Core::HYDRATE_ARRAY);
+    }
+
+    /**
+     * fetchOne
+     * Convenience method to execute the query and return the first item
+     * of the collection.
+     *
+     * @param string $params        Query parameters
+     * @param int $hydrationMode    Hydration mode: see Doctrine_Core::HYDRATE_* constants
+     * @return mixed                Array or Doctrine_Collection, depending on hydration mode. False if no result.
+     */
+    public function fetchOne($params = array(), $hydrationMode = null)
+    {
+        $collection = $this->execute($params, $hydrationMode);
+
+        if (is_scalar($collection)) {
+            return $collection;
+        }
+
+        if (count($collection) === 0) {
+            return false;
+        }
+
+        if ($collection instanceof Doctrine_Collection) {
+            return $collection->getFirst();
+        } else if (is_array($collection)) {
+            return array_shift($collection);
+        }
+
+        return false;
+    }
+
+    /**
+     * isSubquery
+     * if $bool parameter is set this method sets the value of
+     * Doctrine_Query::$isSubquery. If this value is set to true
+     * the query object will not load the primary key fields of the selected
+     * components.
+     *
+     * If null is given as the first parameter this method retrieves the current
+     * value of Doc
