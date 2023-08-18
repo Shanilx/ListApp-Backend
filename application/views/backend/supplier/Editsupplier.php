@@ -21,7 +21,7 @@
         }
         else{
             $class = "alert alert-danger";
-            $msg .= validation_errors('<h5>','</h5>');
+            $msg .= validation_errors('<h5>','< /h5>');
         }
         if($msg!="")
         {
@@ -58,13 +58,14 @@
 
                 <span class="tools pull-right">
                    <span class="error" style="text-transform: lowercase;">All the fields marked with (*) are mandatory</span>
-                 </span>
+                </span>
+                <?php $id = $edit_supplier[0]['supplier_id']; ?>
 
+                 <a href="<?php echo base_url(); ?>apanel/Supplier/AddBulkProduct/<?php echo $id; ?>" style="padding: 0px;"><button class="btn btn-success __web-inspector-hide-shortcut__" type="button"><i class="fa fa-plus"></i> Add Product </button></a>          
+                  </header>
 
-            </header>
             <div class="panel-body">
                 <div class="col-md-12">
-    <?php $id = $edit_supplier[0]['supplier_id']; ?>
         <form role="form" class="form-vertical" action="<?php echo base_url(); ?>apanel/Supplier/EditsupplierData/<?php echo $id; ?>" method="post" id="add_supplier" name="add_supplier">
           <div class="form-group col-md-6">
                 <label>Firm Name<span class="error"> *</span></label>

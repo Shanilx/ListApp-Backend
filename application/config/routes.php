@@ -89,6 +89,9 @@ $route['apanel/Supplier'] = 'backend/Supplier/index';
 $route['apanel/Supplier/getAllcities'] = 'backend/Supplier/getAllcities';
 
 $route['apanel/Supplier/Showsupplier'] = 'backend/Supplier/Showsupplier';
+$route['apanel/Supplier/AddBulkProduct/(:any)'] = 'backend/Supplier/AddBulkProduct/$1';
+$route['apanel/Supplier/Product/(:any)'] = 'backend/Supplier/Product/$1';
+$route['apanel/Supplier/upload_bulk_product'] = 'backend/Supplier/upload_bulk_product';
 $route['apanel/Supplier/Addsupplier'] = 'backend/Supplier/Addsupplier';
 $route['apanel/Supplier/Editsupplier/(:any)'] = 'backend/Supplier/Editsupplier/$1';
 $route['apanel/Supplier/EditsupplierData/(:any)'] = 'backend/Supplier/EditsupplierData/$1';

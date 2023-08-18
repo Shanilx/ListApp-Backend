@@ -49,6 +49,129 @@ class Supplier extends CI_Controller
 		$this->load->view('backend/supplier/Addsupplier',$states);
 		$this->load->view('inc/footer'); 
 	}
+
+	public function Product($id)
+	{
+		$this->check_admin_login();
+		$where = array('id' => $id);
+		$data = $this->Draft_product_model->GetRecord('draft_product', $where);
+		$this->get_header('Add Products');
+		$this->load->view('backend/supplier/AddSupplierProduct',array('data'=>$data));
+		$this->load->view('inc/footer'); 
+
+  
+   }
+	// Bulk Uploads of Products
+public function upload_bulk_product()
+{
+	$supplier_id=$this->input->post('id');
+
+    $config['upload_path'] = './uploads/supplier_product_csv_files';
+    $config['allowed_types'] = 'xlsx';
+    $config['detect_mime'] = true;
+	$this->upload->initialize($config);
+	$this->load->library('upload', $config);
+
+    if (!$this->upload->do_upload('csv_file')) {
+		$this->session->set_flashdata('err', $this->upload->display_errors());
+		echo "upload error to file". $this->upload->display_errors();die;
+
+		$error = array('error' => $this->upload->display_errors());
+
+		$this->session->set_flashdata('err', $error['error']);
+
+        redirect(base_url() . '/apanel/Supplier');
+    } else {
+        $file_data = $this->upload->data();
+        $file_path = './uploads/supplier_product_csv_files/' . $file_data['file_name'];
+        $objReader = PHPExcel_IOFactory::createReader('Excel2007');
+        $objReader->setReadDataOnly(true);
+        $objPHPExcel = $objReader->load($file_path);
+        $objWorksheet = $objPHPExcel->getActiveSheet();
+		$column1 = $objWorksheet->getCell('A1')->getValue();
+		$column2 = $objWorksheet->getCell('B1')->getValue();
+	
+        if ($column1 == 'Product Name' || $column2 == 'Company Name') {
+            $time = date('Y-m-d h:i:s');
+            $existing_products = array();
+            $non_existing_products = array();
+            $existing_companies = array();
+            $non_existing_companies = array();
+			$unnecessary_data = array();
+			$necessary_data_grouped = array(); // Initialize the grouped data array
+
+			for ($i = 2; $i <= $objWorksheet->getHighestRow(); $i++) {
+				$productname = $objWorksheet->getCellByColumnAndRow(0, $i)->getValue();
+				$companyname = $objWorksheet->getCellByColumnAndRow(1, $i)->getValue();
+			
+				
+				if (!empty($productname) && !empty($companyname)) {
+					$company_id = $this->common_model->get_entry_by_data("company", true, array('company_name' => $companyname), "company_name");
+					$product_id = $this->common_model->get_entry_by_data("product", true, array('product_name' => $productname), "product_name");
+					if ($product_id !== null && $product_id !== false && $company_id !== null && $company_id !== false) {
+						// Necessary data
+						$necessary_data[] = array(
+							'existing_products' => $product_id,
+						);
+					} else {
+						// Unnecessary data
+						$unnecessary_data[] = array(
+							'product_name' => $productname,
+							'company_name' => $companyname,
+							'supplier_id' => $supplier_id, // Make sure to set this variable
+						);
+					}
+				}
+			}
+			
+			
+            if (file_exists($file_path)) {
+                unlink($file_path);
+            }
+			if($necessary_data){
+			$necessary_data[] = array('id' => $supplier_id,);
+			 $this->Supplier_product_model->save_bulk_entry('supplier_product',$necessary_data);
+			 };
+
+			 if($unnecessary_data){
+			 $this->Draft_product_model->save_bulk_entry('draft_product',$unnecessary_data);
+			 };
+			 $succ_msg="Uploaded successfully";
+			 $this->session->set_flashdata('succ', $succ_msg);                                      
+			 echo "1";
+            // echo json_encode($unnecessary_data); // Return as JSON or modify to suit your needs
+        } else {
+			$this->session->set_flashdata('succ', "Column Names '$column1' and '$file_path' and '$column2' should be according to Sample XLSX File. Please Try Again");
+			echo "3";
+			
+        }
+    }
+}
+
+// private function checkCompanyExistence($companyname)
+// {
+// 	echo "kunal;";
+// 	die;
+//     $exist_company_record = $this->common_model->get_entry_by_data("company", true, array('company_name' => $companyname), "*");
+    
+//     if (!empty($exist_company_record)) {
+//         return $exist_company_record['company_id'];	
+//     }
+    
+//     return null;
+// }
+
+// private function checkProductExistence($productname)
+// {
+//     $already_exist = $this->common_model->get_entry_by_data("product", true, array('product_name' => $productname), "*");
+    
+//     if (!empty($already_exist)) {
+//         return $already_exist['product_id'];
+//     }
+    
+//     return null;
+// }
+
 	public function Addsupplier()
 
 	{
@@ -68,7 +191,6 @@ class Supplier extends CI_Controller
 		 	$company_deal[]=$this->getIdForProduct('company','company_name',$company_deal_new[$i]);
 		 }
 		}    
-
         $company_deal=implode(',', $company_deal);
 		$company_deal=rtrim($company_deal, ",");
 		//print_r($_POST);die;
@@ -99,10 +221,13 @@ class Supplier extends CI_Controller
 		//print_r($arr);die;
 		$save_result=$this->Supplier_model->save_entry('supplier',$arr);
 		//echo $this->db->last_query();die;
-		//print_r($save_result);
+		$data =[];
 		if($save_result!='')
 		{ 
-					// $supplier_id = $this->session->set_userdata('supplier_id ');
+			$companyIDs =$company_deal; // Extract the array from the data
+			$supplierID =$save_result; // Extract the single value from the data
+			$data=[$companyIDs,$supplierID];
+			$this->Supplier_company_model->save_bulk_entry('supplier_company',$data);
 			$this->session->set_flashdata('succ','Supplier has been Added Successfully');
 			redirect(base_url().'apanel/Supplier');
 		}
@@ -135,7 +260,6 @@ class Supplier extends CI_Controller
 	public function EditsupplierData($id)
 	{
 		$this->check_admin_login();
-	//print_r($_POST);die;
 		$contact_person_arr=array_filter($this->input->post('contact_person'), create_function('$value', 'return $value !== "";'));
 		$company_deal_arr=array_filter($this->input->post('company_deal'), create_function('$value', 'return $value !== "";'));
 		$contact_person=implode(',',$contact_person_arr);
@@ -196,9 +320,12 @@ class Supplier extends CI_Controller
 
 		$where = array('supplier_id' => $id);
 		// $orderby = '';
+		$data =[];
 		$update_supplier = $this->Supplier_model->UpdateData('supplier',$arr,$where);
 		if($update_supplier!='')
 		{ 
+			$companyIDs =$company_deal; // Extract the array from the data
+			$update_supplier_company = $this->Supplier_company_model->UpdateData('supplier_company',$companyIDs,$where);
 			$this->session->set_flashdata('succ','Supplier Details have been Updated Successfully');
 			redirect(base_url().'apanel/Supplier');
 		}
@@ -490,41 +617,57 @@ class Supplier extends CI_Controller
             return $id='';
           }
         }
-
-function changestatus()
-{
-		if(empty($this->input->post('add_submit'))){
-	    $this->get_header('Add Supplier');
-	    $data=array();
-		$this->load->view('backend/supplier/changestatus',$data);
-		$this->load->view('inc/footer'); 
-		}else{
+		public function AddBulkProduct($id)
+		{
+			$this->check_admin_login();
 			
-			$mobile_number=$this->input->post('mobile_number');
-			$ustatus=$this->input->post('status');
-			// if($ustatus=="Active")
-			// {
-			// 	$status=1;
-
-			// }else{
-			// 	$status=0;
-			// }
-
-			$mobilearray=explode("\n",$mobile_number);
-			foreach($mobilearray as $number)
-			{
-				if(!empty($number)){
-					$number=trim($number);
-				//echo $q="update m16j_user set login_status='$status' where phone='$number'";
-				 $this->common_model->update_entry('user',array('status'=>$ustatus),array('phone'=>$number));
-				// echo $this->db->last_query();die;
-				//echo "<br>";
-				}
-			}
-			//die;
-			$this->session->set_flashdata('succ','Status has been updated. ');
-			redirect(base_url().'apanel/changestatus');
+			$where = array('supplier_id' => $id);
+			$data = $this->Draft_product_model->GetRecord('draft_product', $where);
+		
+			// Create two separate data arrays
+			$dataWithFull = $data;  // This one contains the full data
+			$SupplierId = $id;  // This one contains only the extracted supplier_id
+		
+			$this->get_header('Add Products');
+			$this->load->view('backend/supplier/AddProducts', array('dataWithFull' => $dataWithFull, 'SupplierId' => $SupplierId));
+			$this->load->view('inc/footer'); 
 		}
-}
+		
+
+		function changestatus()
+		{
+			if(empty($this->input->post('add_submit'))){
+			$this->get_header('Add Supplier');
+			$data=array();
+			$this->load->view('backend/supplier/changestatus',$data);
+			$this->load->view('inc/footer'); 
+			}else{
+				
+				$mobile_number=$this->input->post('mobile_number');
+				$ustatus=$this->input->post('status');
+				// if($ustatus=="Active")
+				// {
+				// 	$status=1;
+
+				// }else{
+				// 	$status=0;
+				// }
+
+				$mobilearray=explode("\n",$mobile_number);
+				foreach($mobilearray as $number)
+				{
+					if(!empty($number)){
+						$number=trim($number);
+					//echo $q="update m16j_user set login_status='$status' where phone='$number'";
+						$this->common_model->update_entry('user',array('status'=>$ustatus),array('phone'=>$number));
+					// echo $this->db->last_query();die;
+					//echo "<br>";
+					}
+				}
+				//die;
+				$this->session->set_flashdata('succ','Status has been updated. ');
+				redirect(base_url().'apanel/changestatus');
+			}
+		}
 	
 }

@@ -35,6 +35,8 @@ class Product extends CI_Controller {
     }
   }
 
+
+
   public function send_email($to_email, $from_email, $subject, $message) { 
     $from_email = "notify.listapp@gmail.com"; 
 
@@ -650,8 +652,7 @@ class Product extends CI_Controller {
       // 12-06-17
            $this->upload->initialize($config);
           $this->load->library('upload', $config);
-          if (!$this->upload->do_upload('csv_file'))
-          {
+          if (!$this->upload->do_upload('csv_file')){
             $this->session->set_flashdata('err', $this->upload->display_errors());
             echo "upload error to file". $this->upload->display_errors();die;
 
@@ -662,8 +663,7 @@ class Product extends CI_Controller {
             redirect(base_url().'apanel/product/csv_upload_form');
 
           }
-          else
-          {
+          else{
             $file_data = $this->upload->data();
             $file_path =  './uploads/csv_files/'.$file_data['file_name'];
             $extension=$file_data['file_ext'];  

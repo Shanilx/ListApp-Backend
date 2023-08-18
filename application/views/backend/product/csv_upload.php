@@ -141,7 +141,7 @@ background-color: #5cb85c !important;
                         <header class="panel-heading">
                              Bulk Upload
                              <a href="<?php echo base_url('uploads');?>/xlsx_sample_file/Sample ListApp File.xlsx" style="padding: 0px;float:right;"><button class="btn btn-success __web-inspector-hide-shortcut__" type="button" download>Download Sample File</button></a>
-                             <!-- <a href="<?php echo base_url('apanel/product/sample_exports_data');?>" style="padding: 0px;float:right;"><button class="btn btn-success __web-inspector-hide-shortcut__" type="button">Download Sample File</button></a> -->
+                            
                         </header>
                         <div class="panel-body">
                             <div class="form">
