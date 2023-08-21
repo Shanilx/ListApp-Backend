@@ -37,7 +37,7 @@
               <ul class="breadcrumb panel">
                   <li><a href="<?php echo base_url();?>apanel/dashboard"><i class="fa fa-home"></i> Dashboard</a></li>
                   <li><a href="<?php echo base_url();?>apanel/product/1">Manage Product</a></li>
-                  <li class="active">Add Product</li>
+                  <li class="active">Add Supplier Product</li>
               </ul>
               <!--breadcrumbs end -->
           </div>
@@ -49,7 +49,7 @@
           <div class="col-sm-12">
               <section class="panel">
                   <header class="panel-heading">
-                      Add Product
+                      Add Supplier Product
 
                       <span class="tools pull-right">
                           <span class="error" style="text-transform: lowercase;">all the fields marked with (*) are
@@ -60,18 +60,19 @@
                   <div class="panel-body">
                       <section class="panel">
                           <div class="panel-body">
-                              <form action="" method="post" name="addProduct" id="addProduct"
-                                  enctype="multipart/form-data">
-
+                              <form action="<?php echo base_url(); ?>apanel/Supplier/Product/add" method="post"
+                                  name="addProduct" id="addProduct" enctype="multipart/form-data">
                                   <input type="hidden" name="page_no"
-                                      value="<?php echo $this->session->userdata('page_no'); ?>">
+                                  value="<?php echo $this->session->userdata('page_no'); ?>">
+                                  <input type="hidden" value="<?php echo $data[0]['supplier_id']; ?>" name="supplier_id">
+                                  <input type="hidden" value="<?php echo $data[0]['id']; ?>" name="id">
                                   <div class="col-md-12">
                                       <div class="form-group col-md-6">
                                           <label for="exampleInputEmail1">Product Name <span
                                                   class="error">*</span></label>
-                                          <input type="text"  value="<?php echo $data[0]['product_name']; ?>" class="form-control" id="product_name" name="product_name"
-                                              value="<?php echo $data['product_name']; ?>"
-                                              placeholder="Product Name">
+                                          <input type="text" value="<?php echo $data[0]['product_name']; ?>"
+                                              class="form-control" id="product_name" name="product_name"
+                                              value="<?php echo $data['product_name']; ?>" placeholder="Product Name">
                                           <p id="form_product_error"></p>
                                       </div>
 

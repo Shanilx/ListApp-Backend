@@ -42,6 +42,12 @@ public function __construct()
         $this->db->delete($table);
         return $this->db->affected_rows();
     }
+    function DeleteSupplierDraft($table,$name)
+    {   
+        $this->db->where('product_name', $name);
+        $this->db->delete($table);
+        return $this->db->affected_rows();
+    }
 
      public function ajaxGetCompany($table_name,$where='',$ids=array(),$col_name)
     {    

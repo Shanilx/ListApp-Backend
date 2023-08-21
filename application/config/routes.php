@@ -89,8 +89,11 @@ $route['apanel/Supplier'] = 'backend/Supplier/index';
 $route['apanel/Supplier/getAllcities'] = 'backend/Supplier/getAllcities';
 
 $route['apanel/Supplier/Showsupplier'] = 'backend/Supplier/Showsupplier';
+$route['apanel/Supplier/Product/add'] = 'backend/Supplier/addProduct';
 $route['apanel/Supplier/AddBulkProduct/(:any)'] = 'backend/Supplier/AddBulkProduct/$1';
 $route['apanel/Supplier/Product/(:any)'] = 'backend/Supplier/Product/$1';
+$route['apanel/Supplier/getProduct'] = 'backend/Supplier/getProduct';
+$route['apanel/Supplier/Product/synonym/Add'] = 'backend/Supplier/AddProductSynonym';
 $route['apanel/Supplier/upload_bulk_product'] = 'backend/Supplier/upload_bulk_product';
 $route['apanel/Supplier/Addsupplier'] = 'backend/Supplier/Addsupplier';
 $route['apanel/Supplier/Editsupplier/(:any)'] = 'backend/Supplier/Editsupplier/$1';

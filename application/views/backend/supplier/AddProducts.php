@@ -79,9 +79,11 @@
                                             class="require_class">*</span></label>
                                     <div class="col-sm-8">
                                         <div class="upload-btn-wrapper">
-                                            <button class="btn-upload">Select File</button>
-                                            <input type="file" name="csv_file" id="csv_file" class="filenam" />
+
                                         </div>
+                                        <input type="file" class="form-control" name="csv_file" id="csv_file"
+                                            class="filenam" />
+
                                         <br><span>Note: Please use Sample XLSX file for Bulk Product Upload</span>
                                         <p class="text-danger" id="valid_file"></p> <!-- Dynamic error message -->
                                     </div>
@@ -137,8 +139,9 @@
                                         <td>
                                             <!-- Button to open the modal -->
                                             <button class="btn btn-link open-modal-btn" data-toggle="modal"
-                                                data-target="#productModal" data-id="<?php echo $item['id']; ?>">
-                                                Open Modal
+                                                data-target="#productModal"
+                                                data-id="<?php echo $item['product_name']; ?>">
+                                                Related Product
                                             </button>
                                             <a href="<?php echo base_url('apanel/Supplier/Product/' . $item['id']); ?>">
                                                 <button type="button" class="btn btn-success">
@@ -163,7 +166,19 @@
                                         </div>
                                         <div class="modal-body">
                                             <!-- Replace with the content you want to display -->
-                                            <p id="modal-content"></p>
+                                            <h4 id="modal-content" class="font-weight-bold"></h4>
+                                            <label for="Related Product">Related Product</label>
+                                            <form action="<?php echo base_url(); ?>apanel/Supplier/Product/synonym/Add"
+                                                method="post">
+                                                <input type="hidden" name="id" value="<?php echo $SupplierId; ?>">
+                                                <input type="hidden" id="synonym_product_name" name="synonym_product">
+                                                <input type="text" class="form-control" id="product_name"
+                                                    name="product_name" placeholder="Product Name">
+                                                <div id="product_name_sug_box"></div>
+                                                <button type="submit" class="btn btn-primary btn-outline"
+                                                    style="margin-top:10px; margin-left:68%;">Change Product
+                                                    Name</button>
+                                            </form>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
@@ -183,29 +198,65 @@
 
 <!-- body wrapper end -->
 <script>
+    $("#product_name").keyup(function (e) {
+        var value = $(this).val().trim();
+        if (e.keyCode == 40) { // down
+            var selected = $(".change_bg");
+            if (selected.next().length == 0) {
+                // selected.siblings().first().addClass("change_bg");
+            } else {
+                $("#product_name_sug_box li").removeClass("change_bg");
+                selected.next().addClass("change_bg");
+            }
+            return false;
+        }
+        if (e.keyCode == 38) { // up
+            var selected = $(".change_bg");
+            $("#product_name_sug_box li").removeClass("change_bg");
+            if (selected.prev().length == 0) {
+                // selected.siblings().last().addClass("change_bg");
+            } else {
+                selected.prev().addClass("change_bg");
+            }
+            return false;
+        }
+        if (e.keyCode == 13) { // down
+            e.preventDefault();
+            selectPacking();
+            return false;
+        }
+        $("#product_name_sug_box").hide();
+        if (value.length > 1) {
+            $.ajax({
+                url: "<?php echo base_url('apanel/Supplier/getProduct')?>",
+                type: "POST",
+                data: {
+                    'ptype_name': value
+                },
+                success: function (data) {
+                    $("#product_name_sug_box").html(data);
+                    $("#product_name_sug_box").show();
+                }
+            });
+        }
+    });
+
+    $("body").on('click', '.sugg_packingtype', function () {
+        var product_name = $(this).children('a').attr('title');
+        $("#product_name").val(product_name);
+        $("#product_name_sug_box").hide();
+    });
+
     $(document).ready(function () {
         $('#productModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
-            var id = button.data('id'); // Use the correct data attribute name 'data-id'
-
-            // Here, you can make an AJAX request to fetch more information
-            // based on the id, then populate the modal content
-            // Example:
-            // $.ajax({
-            //     url: 'your_endpoint_url',
-            //     method: 'GET',
-            //     data: { id: id },
-            //     success: function(response) {
-            //         $('#modal-content').html(response);
-            //     }
-            // });
-
-            // For demonstration purposes, we'll just populate a sample message
+            var id = button.data('id');
             var modal = $(this);
-            modal.find('.modal-body #modal-content').text('ID: ' +
-                id); // Use the correct variable name 'id'
+            modal.find('.modal-body #modal-content').text('Product Name: ' + id);
+            $('#synonym_product_name').val(id);
         });
     });
+
     // jQuery validation for the upload form
     $("#upload_csv_form").validate({
         ignore: [],
@@ -267,27 +318,33 @@
                 mimeType: "multipart/form-data"
             }).done(function (res) {
                 $("#loder_upload").hide();
-
                 console.log(res); // Log the response to the browser console
 
-                if (res != '') {
-                    setTimeout(function () {
-                        window.location.href = "<?php echo base_url();?>apanel/Supplier";
-                    }, 1000);
+                try {
+                    const responseObject = JSON.parse(res); // Parse the JSON string into an object
+                    console.log(responseObject.supplier_id); // Log the supplier_id
+
+                    if (responseObject.success) {
+                        // Check if 'supplier_id' exists in the response
+                        setTimeout(function () {
+                            window.location.href =
+                                "<?php echo base_url();?>apanel/Supplier/AddBulkProduct/" +
+                                responseObject.supplier_id;
+                        }, 10000000); // 1000 milliseconds (1 second)
+                    }
+                } catch (error) {
+                    console.error("Error parsing JSON:", error);
                 }
 
                 $(my_form_id)[0].reset();
                 submit_btn.val("Upload").prop("disabled", false);
             });
-
         }
-
 
         $(result_output).html("");
         $(error).each(function (i) {
             $(result_output).append('<div class="error">' + error[i] + "</div>");
         });
-
     });
 
     // Code for handling file format selection

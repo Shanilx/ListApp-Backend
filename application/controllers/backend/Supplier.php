@@ -40,6 +40,29 @@ class Supplier extends CI_Controller
 
 		// $this->load->view('Supplier_list', $config);
 	}
+	public function AddProductSynonym()
+	{
+		 $this->check_admin_login();
+		 $synonym_product_name=$this->input->post('synonym_product');
+		 $id=$this->input->post('id');
+		 $product_name=$this->input->post('product_name');
+		 $where= array(
+			'product_name' => $product_name
+		 );
+		 $product_id = $this->Supplier_model->GetRecord('product',$where,'','desc');
+		 $arr = array(
+			'product_id' => $product_id[0]['product_id'],
+			'product_synonym' => $synonym_product_name
+		 );
+		 $this->Supplier_model->save_entry('product_synonyms',$arr);
+		$this->Supplier_model->DeleteSupplierDraft('draft_product', $synonym_product_name);
+		 $this->session->set_flashdata('succ','Product has been Added Successfully');
+		 redirect(base_url().'apanel/Supplier/AddBulkProduct/'.$id);
+
+		
+
+		// $this->load->view('Supplier_list', $config);
+	}
 	public function Showsupplier()
 	{
 		$this->check_admin_login();
@@ -80,7 +103,7 @@ public function upload_bulk_product()
 
 		$this->session->set_flashdata('err', $error['error']);
 
-        redirect(base_url() . '/apanel/Supplier');
+        redirect(base_url() . 'apanel/Supplier/AddBulkProduct/'.$supplier_id);
     } else {
         $file_data = $this->upload->data();
         $file_path = './uploads/supplier_product_csv_files/' . $file_data['file_name'];
@@ -90,7 +113,7 @@ public function upload_bulk_product()
         $objWorksheet = $objPHPExcel->getActiveSheet();
 		$column1 = $objWorksheet->getCell('A1')->getValue();
 		$column2 = $objWorksheet->getCell('B1')->getValue();
-	
+
         if ($column1 == 'Product Name' || $column2 == 'Company Name') {
             $time = date('Y-m-d h:i:s');
             $existing_products = array();
@@ -108,7 +131,13 @@ public function upload_bulk_product()
 				if (!empty($productname) && !empty($companyname)) {
 					$company_id = $this->common_model->get_entry_by_data("company", true, array('company_name' => $companyname), "company_name");
 					$product_id = $this->common_model->get_entry_by_data("product", true, array('product_name' => $productname), "product_name");
-					if ($product_id !== null && $product_id !== false && $company_id !== null && $company_id !== false) {
+					$where = array(
+						'supplier_id'=>$supplier_id,
+						' product_id' => $product_id
+					);
+					$duplicacy = $this->Supplier_model->GetRecord('supplier_product',$where,'');
+					print_r($duplicacy);die;
+					if ((!$duplicacy) && $product_id !== null && $product_id !== false && $company_id !== null && $company_id !== false) {
 						// Necessary data
 						$necessary_data[] = array(
 							'existing_products' => $product_id,
@@ -136,12 +165,19 @@ public function upload_bulk_product()
 			 if($unnecessary_data){
 			 $this->Draft_product_model->save_bulk_entry('draft_product',$unnecessary_data);
 			 };
-			 $succ_msg="Uploaded successfully";
-			 $this->session->set_flashdata('succ', $succ_msg);                                      
-			 echo "1";
+			 $succ_msg = "Uploaded successfully";
+			$this->session->set_flashdata('succ', $succ_msg);
+			$this->session->set_flashdata('supplier_id', $supplier_id);
+			header('Content-Type: application/json');
+			$response = array(
+				'success' => true,
+				'supplier_id' => $supplier_id
+			);
+			
+			echo json_encode($response);
             // echo json_encode($unnecessary_data); // Return as JSON or modify to suit your needs
         } else {
-			$this->session->set_flashdata('succ', "Column Names '$column1' and '$file_path' and '$column2' should be according to Sample XLSX File. Please Try Again");
+			$this->session->set_flashdata('err', "file should be according to Sample XLSX File. Please Try Again");
 			echo "3";
 			
         }
@@ -632,8 +668,118 @@ public function upload_bulk_product()
 			$this->load->view('backend/supplier/AddProducts', array('dataWithFull' => $dataWithFull, 'SupplierId' => $SupplierId));
 			$this->load->view('inc/footer'); 
 		}
-		
 
+		public function addProduct()
+        {
+          $this->check_admin_login();
+          $this->session->unset_userdata('per_page');
+
+          $this->form_validation->set_rules('product_name','Product Name','trim|required');
+          $this->form_validation->set_rules('company_name','Company Name','trim|required');
+      // $this->form_validation->set_rules('form_p','Form','trim|required');
+      // $this->form_validation->set_rules('mrp','MRP','trim|required');  
+
+
+			
+          if($this->form_validation->run() == TRUE)
+          {
+            $page_no=$this->input->post('page_no');
+            $company_name=$this->input->post('company_name');
+            $company_id=$this->getIdForProduct('company','company_name',$company_name);
+            $schedule_name=$this->input->post('schedule');
+            $schedule_id=$this->getIdForProduct('schedule','schedule_name',$schedule_name);
+            $packing_type=$this->input->post('packing_type');
+            $packing_type_id=$this->getIdForProduct('packing_type','packingtype_name',$packing_type);
+            $pack_size=$this->input->post('pack_size');
+            $pack_size_id=$this->getIdForProduct('packsize','Pack_size',$pack_size);
+            $form=$this->input->post('form_p');
+            $form_id=$this->getIdForProduct('form','Form',$form);
+
+
+			$supplier_id =$this->input->post("supplier_id");
+			$product_name =$this->input->post("product_name");
+			$id =$this->input->post("id");
+
+            $date_added = date('Y-m-d H:i:s');
+            $arr = array(
+            'product_name' => $this->input->post('product_name'),
+			'company_name' =>$company_id,//$this->input->post('company_name'),
+			'packing_type' =>$packing_type_id,//$this->input->post('packing_type'),
+			'pack_size' =>$pack_size_id, //$this->input->post('pack_size'),
+			'drug_name' =>$this->input->post('drug_name'),
+			'form' =>$form_id,//$this->input->post('form_p'),
+			'mrp' =>$this->input->post('mrp'),
+			'rate' =>$this->input->post('rate'),
+			'schedule' =>$schedule_id,//$this->input->post('schedule'),
+			'status' =>'1',
+			'add_date'=>$date_added 
+          );
+
+
+		  $save_product = $this->product_model->save_entry('product', $arr);
+		  if ($save_product != '') {
+            // Delete supplier draft if product added successfully
+            $Delete_supplier_product = $this->Supplier_model->DeleteSupplierDraft('draft_product', $product_name);
+            if ($Delete_supplier_product != '') {
+                $details = array(
+                    'supplier_id' => $supplier_id,
+                    'product_id' => $save_product
+                );
+                // Save supplier product relationship
+                 $this->Supplier_model->save_entry('supplier_product', $details);
+            }
+
+            $this->session->set_flashdata('succ', 'Product has been Added Successfully');
+            redirect(base_url() . 'apanel/Supplier/AddBulkProduct/'.$supplier_id);
+        } else
+            {
+              $this->session->set_flashdata('err','Product has not been Added. Please Try Again');
+			  redirect(base_url() . 'apanel/Supplier/Product/' .$id);
+            }
+
+          }
+          else
+          {
+            $where=array('status'=>'1');
+            $data['companies'] = $this->product_model->GetRecord('company',$where);
+            $this->get_header('Add Product');
+            $this->load->view('backend/product/addProdcut',$data);
+            $this->load->view('inc/footer');
+          }
+        }
+
+		public function getProduct()
+		{
+		 $product_name=$this->input->post('ptype_name');
+	  
+	  
+		 $res =$this->common_model->getSuggetion('product',' product_name',$product_name);
+		 $sugetion="";
+		  //echo $this->db->last_query();die;
+		 $sugetion.='<ul style="list-style: none;margin-left:0px;">';
+	  
+		 if(!empty($res)){
+		  $pk=1;
+		  foreach ($res as $value) {
+			if($pk==1){
+	  
+			$sugetion.='<li style="background: lavender;margin-left: -40px;" class="sugg_packingtype change_bg"><a style="margin-left:10px;color:blue;cursor: pointer;text-decoration:none;background:#fffff;"  title="'.$value['product_name'].'">'.$value['product_name'].'</a></li>';
+			}else{
+	  
+			$sugetion.='<li style="background: lavender;margin-left: -40px;" class="sugg_packingtype"><a style="margin-left:10px;color:blue;cursor: pointer;text-decoration:none;background:#fffff;"  title="'.$value['product_name'].'">'.$value['product_name'].'</a></li>';
+			}
+			$pk++;
+		  }
+	  
+		}
+		/*else
+		{
+			$sugetion.='<li style="background: lavender;margin-left: -40px;"><a style="margin-left:10px;color:blue;cursor: pointer;text-decoration:none" class="sugg_company" > No Match Found</a></li>';
+		  }*/
+		  $sugetion.='</ul>';
+	  
+		  echo $sugetion;
+		}
 		function changestatus()
 		{
 			if(empty($this->input->post('add_submit'))){
