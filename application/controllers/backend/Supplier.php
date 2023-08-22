@@ -55,7 +55,7 @@ class Supplier extends CI_Controller
 			'product_synonym' => $synonym_product_name
 		 );
 		 $this->Supplier_model->save_entry('product_synonyms',$arr);
-		$this->Supplier_model->DeleteSupplierDraft('draft_product', $synonym_product_name);
+		 $this->Supplier_model->DeleteSupplierDraft('draft_product', $synonym_product_name);
 		 $this->session->set_flashdata('succ','Product has been Added Successfully');
 		 redirect(base_url().'apanel/Supplier/AddBulkProduct/'.$id);
 
@@ -130,14 +130,25 @@ public function upload_bulk_product()
 				
 				if (!empty($productname) && !empty($companyname)) {
 					$company_id = $this->common_model->get_entry_by_data("company", true, array('company_name' => $companyname), "company_name");
-					$product_id = $this->common_model->get_entry_by_data("product", true, array('product_name' => $productname), "product_name");
+					$product_info = $this->common_model->get_entry_by_data("product", true, array('product_name' => $productname), "product_name, product_id");
+					$product_id = $product_info['product_id'];
+					$product_name = $product_info['product_name'];
 					$where = array(
-						'supplier_id'=>$supplier_id,
-						' product_id' => $product_id
+						'supplier_id' => $supplier_id,
+						'product_id' => $product_id
 					);
-					$duplicacy = $this->Supplier_model->GetRecord('supplier_product',$where,'');
-					print_r($duplicacy);die;
-					if ((!$duplicacy) && $product_id !== null && $product_id !== false && $company_id !== null && $company_id !== false) {
+					$orderby = '';
+					$duplicacy = $this->Supplier_model->GetSupplierProduct('supplier_product', $where, $orderby);
+				
+					if($duplicacy){
+						// Unnecessary data
+						$unnecessary_data[] = array(
+							'product_name' => $productname,
+							'company_name' => $companyname,
+							'supplier_id' => $supplier_id, // Make sure to set this variable
+						);
+					}else{
+					if ($product_id !== null && $product_id !== false && $company_id !== null && $company_id !== false) {
 						// Necessary data
 						$necessary_data[] = array(
 							'existing_products' => $product_id,
@@ -152,7 +163,7 @@ public function upload_bulk_product()
 					}
 				}
 			}
-			
+		}
 			
             if (file_exists($file_path)) {
                 unlink($file_path);
@@ -165,17 +176,10 @@ public function upload_bulk_product()
 			 if($unnecessary_data){
 			 $this->Draft_product_model->save_bulk_entry('draft_product',$unnecessary_data);
 			 };
-			 $succ_msg = "Uploaded successfully";
-			$this->session->set_flashdata('succ', $succ_msg);
-			$this->session->set_flashdata('supplier_id', $supplier_id);
-			header('Content-Type: application/json');
-			$response = array(
-				'success' => true,
-				'supplier_id' => $supplier_id
-			);
-			
-			echo json_encode($response);
-            // echo json_encode($unnecessary_data); // Return as JSON or modify to suit your needs
+			//  $succ_msg = "Uploaded successfully";
+			 $this->session->set_flashdata('succ', "Uploaded successfully");
+			echo "1";
+		
         } else {
 			$this->session->set_flashdata('err', "file should be according to Sample XLSX File. Please Try Again");
 			echo "3";
@@ -730,7 +734,7 @@ public function upload_bulk_product()
             }
 
             $this->session->set_flashdata('succ', 'Product has been Added Successfully');
-            redirect(base_url() . 'apanel/Supplier/AddBulkProduct/'.$supplier_id);
+            redirect(base_url() . 'apanel/product/1');
         } else
             {
               $this->session->set_flashdata('err','Product has not been Added. Please Try Again');

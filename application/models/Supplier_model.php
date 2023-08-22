@@ -29,6 +29,35 @@ public function __construct()
         //echo $this->db->last_query();
         return $query->result_array();
     }
+
+  function GetSupplierProduct($table, $where = array(), $orderby = '', $sort = '') {
+    $this->db->select('*');
+    $this->db->from($table);
+
+    // Check if the $where parameter is an array and not empty
+    if (!empty($where) && is_array($where)) {
+        // Loop through each condition in the $where array and add it to the query
+        foreach ($where as $key => $value) {
+            if (is_array($value)) {
+                // Handle the case where $value is an array (e.g., 'product_id' => array('product_name' => 'OESTROGEL 0.06% GEL'))
+                foreach ($value as $subkey => $subvalue) {
+                    $this->db->where("$table.$subkey", $subvalue);
+                }
+            } else {
+                $this->db->where("$table.$key", $value);
+            }
+        }
+    }
+
+    if (!empty($orderby)) {
+        $this->db->order_by($orderby, $sort);
+    }
+
+    $query = $this->db->get();
+    return $query->result_array();
+}
+
+    
     function UpdateData($table,$data,$where)
     {
         $prefTable = $this->db->dbprefix($table);

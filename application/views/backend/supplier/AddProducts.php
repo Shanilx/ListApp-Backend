@@ -1,17 +1,4 @@
-<style type="text/css">
-    .alert_new {
-        display: none;
-    }
-
-    .progress,
-    .alert {
-        margin: 15px;
-    }
-
-    .alert {
-        display: none;
-    }
-
+<style>
     .upload-btn-wrapper {
         position: relative;
         overflow: hidden;
@@ -36,19 +23,56 @@
         cursor: pointer;
     }
 </style>
+<style type="text/css">
+    .alert_new {
+        display: none;
+    }
+
+    .progress,
+    .alert {
+        margin: 15px;
+    }
+
+    .alert {
+        display: none;
+    }
+</style>
 
 <div class="page-heading">
     <h3>Bulk Upload</h3>
 </div>
-
+<!-- body wrapper end -->
 <div class="wrapper">
-    <div class="alert alert-block fade in">
-        <!-- Flash messages content here -->
+    <?php 
+        $msg = "";
+        if ($this->session->flashdata('succ')) {
+            $class = "alert alert-success fade in";
+            $msg .= $this->session->flashdata('succ');
+        } elseif ($this->session->flashdata('err')) {
+            $class = "alert alert-block alert-danger fade in";
+            $msg .= $this->session->flashdata('err');
+        } else {
+            $class = "alert alert-block alert-danger fade in";
+            $msg .= validation_errors();
+        } 
+        if ($msg != "") {
+    ?>
+    <!-- Alert Message -->
+    <div class="alert alert-block <?php echo $class;?> fade in">
+        <button data-dismiss="alert" class="close close-sm" type="button">
+            <i class="fa fa-times"></i>
+        </button>
+        <?php echo $msg;?>
     </div>
+    <?php 
+    }
+    ?>
 
+    <!-- Page Content Wrapper -->
     <div class="wrapper">
         <div class="row">
             <div class="col-sm-12">
+                <!-- Breadcrumbs -->
                 <ul class="breadcrumb panel">
                     <li><a href="<?php echo base_url().'apanel/dashboard'?>"><i class="fa fa-home"></i> Dashboard</a>
                     </li>
@@ -56,9 +80,11 @@
                     <li>Bulk Products Upload </li>
                 </ul>
 
+                <!-- Bulk Upload Section -->
                 <section class="panel">
                     <header class="panel-heading">
                         Bulk Upload
+                        <!-- Download Sample File Button -->
                         <div class="upload-btn-wrapper">
                             <a href="<?php echo base_url('uploads');?>/xlsx_sample_file/sample_bulk_prodocts.xlsx"
                                 style="padding: 0px;float:right;">
@@ -67,28 +93,34 @@
                         </div>
                     </header>
 
+                    <!-- Upload Form -->
                     <div class="panel-body">
                         <div class="form">
                             <form class="cmxform form-horizontal adminex-form" id="upload_csv_form" method="post"
                                 action="<?php echo base_url().'apanel/Supplier/upload_bulk_product'?>"
                                 name="upload_csv_form" enctype="multipart/form-data">
+                                <!-- Hidden Input for Supplier ID -->
                                 <input type="hidden" name="id" value="<?php echo $SupplierId; ?>">
 
+                                <!-- Error Message for Upload -->
+                                <div class="error_msg"></div>
+
                                 <div class="form-group">
+                                    <!-- Label and Input for File Upload -->
                                     <label class="col-sm-2 control-label">Upload XLSX File<span
                                             class="require_class">*</span></label>
                                     <div class="col-sm-8">
                                         <div class="upload-btn-wrapper">
-
+                                            <!-- File Input -->
                                         </div>
                                         <input type="file" class="form-control" name="csv_file" id="csv_file"
                                             class="filenam" />
-
                                         <br><span>Note: Please use Sample XLSX file for Bulk Product Upload</span>
                                         <p class="text-danger" id="valid_file"></p> <!-- Dynamic error message -->
                                     </div>
                                 </div>
 
+                                <!-- Upload Progress and Submit Button -->
                                 <div class="form-group">
                                     <div class="col-sm-5">
                                         <p id="loder_upload" style="display:none;margin-left: 194px;">
@@ -107,6 +139,8 @@
                         </div>
                     </div>
                 </section>
+
+                <!-- Products Table -->
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel panel-info">
@@ -131,6 +165,7 @@
                                 </thead>
 
                                 <tbody>
+                                    <!-- Product Table Rows -->
                                     <?php foreach ($dataWithFull as $index => $item): ?>
                                     <tr>
                                         <td><?php echo $index + 1; ?></td>
@@ -138,32 +173,37 @@
                                         <td><?php echo $item['company_name']; ?></td>
                                         <td>
                                             <!-- Button to open the modal -->
-                                            <button class="btn btn-link open-modal-btn" data-toggle="modal"
+                                            <button class="btn btn-primary open-modal-btn" data-toggle="modal"
                                                 data-target="#productModal"
                                                 data-id="<?php echo $item['product_name']; ?>">
-                                                Related Product
+                                                Map Existing Product
                                             </button>
+
                                             <a href="<?php echo base_url('apanel/Supplier/Product/' . $item['id']); ?>">
                                                 <button type="button" class="btn btn-success">
-                                                    <i class="fa fa-plus"></i> Add Product
+                                                    <i class="fa fa-plus"></i> Create New Product
                                                 </button>
                                             </a>
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>
                                 </tbody>
-
                             </table>
+
+                            <!-- Product Details Modal -->
                             <div class="modal fade" id="productModal" tabindex="-1" role="dialog"
                                 aria-labelledby="productModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
+                                        <!-- Modal Header -->
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="productModalLabel">Product Details</h5>
+                                            <h5 class="modal-title" id="productModalLabel">Map Existing Product</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
+
+                                        <!-- Modal Body -->
                                         <div class="modal-body">
                                             <!-- Replace with the content you want to display -->
                                             <h4 id="modal-content" class="font-weight-bold"></h4>
@@ -176,10 +216,13 @@
                                                     name="product_name" placeholder="Product Name">
                                                 <div id="product_name_sug_box"></div>
                                                 <button type="submit" class="btn btn-primary btn-outline"
-                                                    style="margin-top:10px; margin-left:68%;">Change Product
-                                                    Name</button>
+                                                    style="margin-top:10px;">
+                                                    Confirm Mapping
+                                                </button>
                                             </form>
                                         </div>
+
+                                        <!-- Modal Footer -->
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-dismiss="modal">Close</button>
@@ -187,7 +230,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -196,7 +238,6 @@
     </div>
 </div>
 
-<!-- body wrapper end -->
 <script>
     $("#product_name").keyup(function (e) {
         var value = $(this).val().trim();
@@ -318,22 +359,33 @@
                 mimeType: "multipart/form-data"
             }).done(function (res) {
                 $("#loder_upload").hide();
-                console.log(res); // Log the response to the browser console
 
-                try {
-                    const responseObject = JSON.parse(res); // Parse the JSON string into an object
-                    console.log(responseObject.supplier_id); // Log the supplier_id
-
-                    if (responseObject.success) {
-                        // Check if 'supplier_id' exists in the response
+                if (res != '') {
+                    if (res == '1') {
                         setTimeout(function () {
-                            window.location.href =
-                                "<?php echo base_url();?>apanel/Supplier/AddBulkProduct/" +
-                                responseObject.supplier_id;
-                        }, 10000000); // 1000 milliseconds (1 second)
+                            window.location.href = "<?php echo base_url();?>apanel/Supplier";
+                        }, 1000);
+                    } else if (res == '2' || res == '21') {
+                        setTimeout(function () {
+                            window.location.href = "<?php echo base_url();?>apanel/Supplier";
+                        }, 1000);
+                    } else if (res == '3') {
+                        setTimeout(function () {
+                            window.location.href = "<?php echo base_url();?>apanel/Supplier";
+                        }, 1000);
+                    } else if (res == '4') {
+                        setTimeout(function () {
+                            window.location.href = "<?php echo base_url();?>apanel/Supplier";
+                        }, 1000);
+                    } else {
+                        setTimeout(function () {
+                            window.location.href = "<?php echo base_url();?>apanel/Supplier";
+                        }, 1000);
                     }
-                } catch (error) {
-                    console.error("Error parsing JSON:", error);
+                } else {
+                    setTimeout(function () {
+                        window.location.href = "<?php echo base_url();?>apanel/Supplier";
+                    }, 1000);
                 }
 
                 $(my_form_id)[0].reset();
