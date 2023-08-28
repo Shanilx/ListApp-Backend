@@ -1,3 +1,4 @@
+
 <style>
     .upload-btn-wrapper {
         position: relative;
@@ -23,50 +24,12 @@
         cursor: pointer;
     }
 </style>
-<style type="text/css">
-    .alert_new {
-        display: none;
-    }
-
-    .progress,
-    .alert {
-        margin: 15px;
-    }
-
-    .alert {
-        display: none;
-    }
-</style>
 
 <div class="page-heading">
     <h3>Bulk Upload</h3>
 </div>
 <!-- body wrapper end -->
 <div class="wrapper">
-    <?php 
-        $msg = "";
-        if ($this->session->flashdata('succ')) {
-            $class = "alert alert-success fade in";
-            $msg .= $this->session->flashdata('succ');
-        } elseif ($this->session->flashdata('err')) {
-            $class = "alert alert-block alert-danger fade in";
-            $msg .= $this->session->flashdata('err');
-        } else {
-            $class = "alert alert-block alert-danger fade in";
-            $msg .= validation_errors();
-        } 
-        if ($msg != "") {
-    ?>
-    <!-- Alert Message -->
-    <div class="alert alert-block <?php echo $class;?> fade in">
-        <button data-dismiss="alert" class="close close-sm" type="button">
-            <i class="fa fa-times"></i>
-        </button>
-        <?php echo $msg;?>
-    </div>
-    <?php 
-    }
-    ?>
 
     <!-- Page Content Wrapper -->
     <div class="wrapper">
@@ -79,19 +42,48 @@
                     <li><a href="<?php echo base_url().'apanel/Supplier'?>">Manage Supplier</a></li>
                     <li>Bulk Products Upload </li>
                 </ul>
+                <?php 
+                $msg ="";
+                if($this->session->flashdata('succ'))
+                {
+                    $class = "alert-success";
+                    $msg .= $this->session->flashdata('succ');
+                }elseif($this->session->flashdata('err'))
+                {
+                    $class = "alert-danger";
+                    $msg .= $this->session->flashdata('err');
+                }
+                else
+                {
+                    $class = "alert-danger";
+                    $msg .= validation_errors('<h5>','</h5>');
+                }
 
+                if($msg!="")
+                {  
+                    ?>
+                    <div class="alert alert-block <?php echo $class;?> fade in" style="text-align: center;">
+                        <button data-dismiss="alert" class="close close-sm" type="button">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <?php echo $msg; ?>
+                    </div>
+
+                    <?php } ?>
                 <!-- Bulk Upload Section -->
                 <section class="panel">
-                    <header class="panel-heading">
-                        Bulk Upload
+                <div class="row">
+                    <h4 class="col-xs-6" style="margin-top:12px; mx-3"><b>&nbsp;&nbsp;&nbsp;Bulk Upload</b></h4>
+                    <div class="col-xs-6 text-right">
                         <!-- Download Sample File Button -->
                         <div class="upload-btn-wrapper">
-                            <a href="<?php echo base_url('uploads');?>/xlsx_sample_file/sample_bulk_prodocts.xlsx"
-                                style="padding: 0px;float:right;">
-                                <button class="btn btn-success" type="button" download>Download Sample File</button>
+                            <a href="<?php echo base_url('uploads');?>/xlsx_sample_file/sample_bulk_prodocts.xlsx">
+                                <button class="btn btn-success" style="margin-top:12px; margin-right:10px;" type="button" download>Download Sample File</button>
                             </a>
                         </div>
-                    </header>
+                    </div>
+                </div>
+
 
                     <!-- Upload Form -->
                     <div class="panel-body">
@@ -102,8 +94,6 @@
                                 <!-- Hidden Input for Supplier ID -->
                                 <input type="hidden" name="id" value="<?php echo $SupplierId; ?>">
 
-                                <!-- Error Message for Upload -->
-                                <div class="error_msg"></div>
 
                                 <div class="form-group">
                                     <!-- Label and Input for File Upload -->
@@ -130,7 +120,7 @@
                                         <div id="output">
                                             <!-- error or success results -->
                                         </div>
-                                        <div class="alert alert-success" role="alert">Loading completed!</div>
+                                        <!-- <div class="alert alert-success" role="alert">Loading completed!</div> -->
                                         <input name="submit" type="submit" value="Upload"
                                             class="btn btn-primary upload_csv_btn" id="csv" />
                                     </div>
@@ -239,48 +229,51 @@
 </div>
 
 <script>
-    $("#product_name").keyup(function (e) {
-        var value = $(this).val().trim();
-        if (e.keyCode == 40) { // down
-            var selected = $(".change_bg");
-            if (selected.next().length == 0) {
-                // selected.siblings().first().addClass("change_bg");
-            } else {
-                $("#product_name_sug_box li").removeClass("change_bg");
-                selected.next().addClass("change_bg");
-            }
-            return false;
-        }
-        if (e.keyCode == 38) { // up
-            var selected = $(".change_bg");
+  $("#product_name").keydown(function (e) {
+    var value = $(this).val().trim();
+    if (e.keyCode == 40) { // down
+        var selected = $(".change_bg");
+        if (selected.next().length == 0) {
+            // selected.siblings().first().addClass("change_bg");
+        } else {
             $("#product_name_sug_box li").removeClass("change_bg");
-            if (selected.prev().length == 0) {
-                // selected.siblings().last().addClass("change_bg");
-            } else {
-                selected.prev().addClass("change_bg");
+            selected.next().addClass("change_bg");
+        }
+        e.preventDefault(); // Prevent the default behavior
+        return false;
+    }
+    if (e.keyCode == 38) { // up
+        var selected = $(".change_bg");
+        $("#product_name_sug_box li").removeClass("change_bg");
+        if (selected.prev().length == 0) {
+            // selected.siblings().last().addClass("change_bg");
+        } else {
+            selected.prev().addClass("change_bg");
+        }
+        e.preventDefault(); // Prevent the default behavior
+        return false;
+    }
+    if (e.keyCode == 13) { // down
+        e.preventDefault();
+        selectPacking();
+        return false;
+    }
+    $("#product_name_sug_box").hide();
+    if (value.length > 1) {
+        $.ajax({
+            url: "<?php echo base_url('apanel/Supplier/getProduct')?>",
+            type: "POST",
+            data: {
+                'ptype_name': value
+            },
+            success: function (data) {
+                $("#product_name_sug_box").html(data);
+                $("#product_name_sug_box").show();
             }
-            return false;
-        }
-        if (e.keyCode == 13) { // down
-            e.preventDefault();
-            selectPacking();
-            return false;
-        }
-        $("#product_name_sug_box").hide();
-        if (value.length > 1) {
-            $.ajax({
-                url: "<?php echo base_url('apanel/Supplier/getProduct')?>",
-                type: "POST",
-                data: {
-                    'ptype_name': value
-                },
-                success: function (data) {
-                    $("#product_name_sug_box").html(data);
-                    $("#product_name_sug_box").show();
-                }
-            });
-        }
-    });
+        });
+    }
+});
+
 
     $("body").on('click', '.sugg_packingtype', function () {
         var product_name = $(this).children('a').attr('title');
@@ -358,33 +351,39 @@
                 processData: false,
                 mimeType: "multipart/form-data"
             }).done(function (res) {
-                $("#loder_upload").hide();
 
+                // Parse the JSON string into a JavaScript object
+                var responseObject = JSON.parse(res);
+                // Now you can access the data like this
+                var supplierId = responseObject.supplier_id;
+                var response = responseObject.response;
+                $("#loder_upload").hide();
                 if (res != '') {
-                    if (res == '1') {
+                    if (response == '1') {
                         setTimeout(function () {
-                            window.location.href = "<?php echo base_url();?>apanel/Supplier";
+                            window.location.href = "<?php echo base_url();?>apanel/Supplier/AddBulkProduct/" + supplierId;
+
                         }, 1000);
-                    } else if (res == '2' || res == '21') {
+                    } else if (response == '2' || res == '21') {
                         setTimeout(function () {
-                            window.location.href = "<?php echo base_url();?>apanel/Supplier";
+                            window.location.href = "<?php echo base_url();?>apanel/Supplier/AddBulkProduct/" + supplierId;
+                                                }, 1000);
+                    } else if (response == '3') {
+                        setTimeout(function () {
+                            window.location.href = "<?php echo base_url();?>apanel/Supplier/AddBulkProduct/" + supplierId;
                         }, 1000);
-                    } else if (res == '3') {
+                    } else if (response == '4') {
                         setTimeout(function () {
-                            window.location.href = "<?php echo base_url();?>apanel/Supplier";
-                        }, 1000);
-                    } else if (res == '4') {
-                        setTimeout(function () {
-                            window.location.href = "<?php echo base_url();?>apanel/Supplier";
+                            window.location.href = "<?php echo base_url();?>apanel/Supplier/AddBulkProduct/" + supplierId;
                         }, 1000);
                     } else {
                         setTimeout(function () {
-                            window.location.href = "<?php echo base_url();?>apanel/Supplier";
+                            window.location.href = "<?php echo base_url();?>apanel/Supplier/AddBulkProduct/" + supplierId;
                         }, 1000);
                     }
                 } else {
                     setTimeout(function () {
-                        window.location.href = "<?php echo base_url();?>apanel/Supplier";
+                        window.location.href = "<?php echo base_url();?>apanel/Supplier/AddBulkProduct/" + supplierId;
                     }, 1000);
                 }
 

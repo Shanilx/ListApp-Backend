@@ -54,12 +54,19 @@ class Supplier extends CI_Controller
 			'product_id' => $product_id[0]['product_id'],
 			'product_synonym' => $synonym_product_name
 		 );
-		 $this->Supplier_model->save_entry('product_synonyms',$arr);
-		 $this->Supplier_model->DeleteSupplierDraft('draft_product', $synonym_product_name);
-		 $this->session->set_flashdata('succ','Product has been Added Successfully');
-		 redirect(base_url().'apanel/Supplier/AddBulkProduct/'.$id);
-
-		
+		 $duplicate_synonym = $this->Supplier_model->GetRecord('product_synonyms', $arr = array(
+			'product_id' => $product_id[0]['product_id'],
+			'product_synonym' => $synonym_product_name
+		 ),'','desc');
+		 if($duplicate_synonym){
+			$this->session->set_flashdata('err','Product has Already Mapped');
+			redirect(base_url().'apanel/Supplier/AddBulkProduct/'.$id);
+		 }else{
+			 $this->Supplier_model->save_entry('product_synonyms',$arr);
+			 $this->Supplier_model->DeleteSupplierDraft('draft_product', $synonym_product_name);
+			 $this->session->set_flashdata('succ','Product has been Mapped Successfully');
+			 redirect(base_url().'apanel/Supplier/AddBulkProduct/'.$id);
+		 }
 
 		// $this->load->view('Supplier_list', $config);
 	}
@@ -85,132 +92,99 @@ class Supplier extends CI_Controller
   
    }
 	// Bulk Uploads of Products
-public function upload_bulk_product()
-{
-	$supplier_id=$this->input->post('id');
+	public function upload_bulk_product()
+	{
+		$supplier_id = $this->input->post('id');
+	
+		$config['upload_path'] = FCPATH . 'uploads/supplier_product_csv_files/';
+		$config['allowed_types'] = 'xlsx';
+		$config['detect_mime'] = true;
 
-    $config['upload_path'] = './uploads/supplier_product_csv_files';
-    $config['allowed_types'] = 'xlsx';
-    $config['detect_mime'] = true;
-	$this->upload->initialize($config);
-	$this->load->library('upload', $config);
+		$this->upload->initialize($config);
+		$this->load->library('upload', $config);
 
-    if (!$this->upload->do_upload('csv_file')) {
-		$this->session->set_flashdata('err', $this->upload->display_errors());
-		echo "upload error to file". $this->upload->display_errors();die;
-
-		$error = array('error' => $this->upload->display_errors());
-
-		$this->session->set_flashdata('err', $error['error']);
-
-        redirect(base_url() . 'apanel/Supplier/AddBulkProduct/'.$supplier_id);
-    } else {
-        $file_data = $this->upload->data();
-        $file_path = './uploads/supplier_product_csv_files/' . $file_data['file_name'];
-        $objReader = PHPExcel_IOFactory::createReader('Excel2007');
-        $objReader->setReadDataOnly(true);
-        $objPHPExcel = $objReader->load($file_path);
-        $objWorksheet = $objPHPExcel->getActiveSheet();
-		$column1 = $objWorksheet->getCell('A1')->getValue();
-		$column2 = $objWorksheet->getCell('B1')->getValue();
-
-        if ($column1 == 'Product Name' || $column2 == 'Company Name') {
-            $time = date('Y-m-d h:i:s');
-            $existing_products = array();
-            $non_existing_products = array();
-            $existing_companies = array();
-            $non_existing_companies = array();
-			$unnecessary_data = array();
-			$necessary_data_grouped = array(); // Initialize the grouped data array
-
-			for ($i = 2; $i <= $objWorksheet->getHighestRow(); $i++) {
-				$productname = $objWorksheet->getCellByColumnAndRow(0, $i)->getValue();
-				$companyname = $objWorksheet->getCellByColumnAndRow(1, $i)->getValue();
+		if (!$this->upload->do_upload('csv_file')) {
+			$error = array('error' => $this->upload->display_errors());
+		
+            $this->session->set_flashdata('err', $error['error']);
+			echo json_encode(array('supplier_id' => $supplier_id, 'response' => '2'));
+		
+		}  else {
+			$file_data = $this->upload->data();
+			$file_path = './uploads/supplier_product_csv_files/' . $file_data['file_name'];
+			$objReader = PHPExcel_IOFactory::createReader('Excel2007');
+			$objReader->setReadDataOnly(true);
+			$objPHPExcel = $objReader->load($file_path);
+			$objWorksheet = $objPHPExcel->getActiveSheet();
+			$column1 = $objWorksheet->getCell('A1')->getValue();
+			$column2 = $objWorksheet->getCell('B1')->getValue();
+	
+			if ($column1 == 'Product Name' && $column2 == 'Company Name') {
+				$unnecessary_data = [];
+				$necessary_data = [];
+	
+				for ($i = 2; $i <= $objWorksheet->getHighestRow(); $i++) {
+					$product_name = $objWorksheet->getCellByColumnAndRow(0, $i)->getValue();
+					$company_name = $objWorksheet->getCellByColumnAndRow(1, $i)->getValue();
 			
+					if (!empty($product_name) && !empty($company_name)) {
+						// Get company_id
+						$company_id = $this->Supplier_product_model->get_entry_by_data("company", true, array('company_name' => $company_name), "company_name");
 				
-				if (!empty($productname) && !empty($companyname)) {
-					$company_id = $this->common_model->get_entry_by_data("company", true, array('company_name' => $companyname), "company_name");
-					$product_info = $this->common_model->get_entry_by_data("product", true, array('product_name' => $productname), "product_name, product_id");
-					$product_id = $product_info['product_id'];
-					$product_name = $product_info['product_name'];
-					$where = array(
-						'supplier_id' => $supplier_id,
-						'product_id' => $product_id
-					);
-					$orderby = '';
-					$duplicacy = $this->Supplier_model->GetSupplierProduct('supplier_product', $where, $orderby);
+						// Get product_info
+						$product_info = $this->Supplier_product_model->get_entry_by_data("product", true, array('product_name' => $product_name), "product_name, product_id");
 				
-					if($duplicacy){
-						// Unnecessary data
-						$unnecessary_data[] = array(
-							'product_name' => $productname,
-							'company_name' => $companyname,
-							'supplier_id' => $supplier_id, // Make sure to set this variable
-						);
-					}else{
-					if ($product_id !== null && $product_id !== false && $company_id !== null && $company_id !== false) {
-						// Necessary data
-						$necessary_data[] = array(
-							'existing_products' => $product_id,
-						);
-					} else {
-						// Unnecessary data
-						$unnecessary_data[] = array(
-							'product_name' => $productname,
-							'company_name' => $companyname,
-							'supplier_id' => $supplier_id, // Make sure to set this variable
-						);
+						$product_id = $product_info['product_id'];
+						//Get supplier Product 
+
+						$supplier_product = $this->Supplier_product_model->get_entry_by_data("product_synonyms", true, array('product_synonym' => $product_name), "id");
+						
+						if (($supplier_product !== null && $supplier_product !== false) || ($product_info !== null && $product_info !== false && $company_id !== null && $company_id !== false)) {
+
+							$necessary_data[] = array(
+								'existing_products' => $product_id,
+								'id' => $supplier_id
+							);
+							
+						} else {
+							// Unnecessary data
+							$unnecessary_data[] = array(
+								'product_name' => $product_name,
+								'company_name' => $company_name,
+								'supplier_id' => $supplier_id
+							);
+						}
 					}
 				}
+				print_r($necessary_data);
+						print_r($unnecessary_data);
+	
+				// Save necessary data
+				if (!empty($necessary_data)) {
+					$this->Supplier_product_model->save_bulk_entry('supplier_product', $necessary_data);
+				}
+	
+				// Save unnecessary data
+				if (!empty($unnecessary_data)) {
+					$this->Draft_product_model->save_bulk_entry('draft_product', $unnecessary_data);
+				}
+	
+				// Clean up: delete the uploaded file
+				if (file_exists($file_path)) {
+					unlink($file_path);
+				}
+	
+				$this->session->set_flashdata('succ', "Uploaded successfully");
+				echo json_encode(array('supplier_id' => $supplier_id, 'response' => '1'));
+			} else {
+				// Invalid file format
+				$this->session->set_flashdata('err', "File should have columns 'Product Name' and 'Company Name'");
+				echo json_encode(array('supplier_id' => $supplier_id, 'response' => '3'));
+
 			}
 		}
-			
-            if (file_exists($file_path)) {
-                unlink($file_path);
-            }
-			if($necessary_data){
-			$necessary_data[] = array('id' => $supplier_id,);
-			 $this->Supplier_product_model->save_bulk_entry('supplier_product',$necessary_data);
-			 };
+	}
 
-			 if($unnecessary_data){
-			 $this->Draft_product_model->save_bulk_entry('draft_product',$unnecessary_data);
-			 };
-			//  $succ_msg = "Uploaded successfully";
-			 $this->session->set_flashdata('succ', "Uploaded successfully");
-			echo "1";
-		
-        } else {
-			$this->session->set_flashdata('err', "file should be according to Sample XLSX File. Please Try Again");
-			echo "3";
-			
-        }
-    }
-}
-
-// private function checkCompanyExistence($companyname)
-// {
-// 	echo "kunal;";
-// 	die;
-//     $exist_company_record = $this->common_model->get_entry_by_data("company", true, array('company_name' => $companyname), "*");
-    
-//     if (!empty($exist_company_record)) {
-//         return $exist_company_record['company_id'];	
-//     }
-    
-//     return null;
-// }
-
-// private function checkProductExistence($productname)
-// {
-//     $already_exist = $this->common_model->get_entry_by_data("product", true, array('product_name' => $productname), "*");
-    
-//     if (!empty($already_exist)) {
-//         return $already_exist['product_id'];
-//     }
-    
-//     return null;
-// }
 
 	public function Addsupplier()
 
