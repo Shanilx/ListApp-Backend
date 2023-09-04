@@ -24,7 +24,7 @@ class Supplier_company_model extends CI_Model {
         }
         return;
     }
-    function UpdateData($table,$data,$where)
+        function UpdateData($table,$data,$where)
     {
         $this->db->where('supplier_id', $id);
         $this->db->delete($table);

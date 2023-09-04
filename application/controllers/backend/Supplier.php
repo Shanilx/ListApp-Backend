@@ -120,45 +120,97 @@ class Supplier extends CI_Controller
 			$column2 = $objWorksheet->getCell('B1')->getValue();
 	
 			if ($column1 == 'Product Name' && $column2 == 'Company Name') {
-				$unnecessary_data = [];
+				$company_neccassary_data = [];
 				$necessary_data = [];
 	
 				for ($i = 2; $i <= $objWorksheet->getHighestRow(); $i++) {
 					$product_name = $objWorksheet->getCellByColumnAndRow(0, $i)->getValue();
 					$company_name = $objWorksheet->getCellByColumnAndRow(1, $i)->getValue();
+					$drug_name = $objWorksheet->getCellByColumnAndRow(2, $i)->getValue() ?: null;
+					$form = $objWorksheet->getCellByColumnAndRow(3, $i)->getValue() ?: null;
+					$pack_size = $objWorksheet->getCellByColumnAndRow(4, $i)->getValue() ?: null;
+					$packing_type= $objWorksheet->getCellByColumnAndRow(4, $i)->getValue() ?: null;
+					$mrp= $objWorksheet->getCellByColumnAndRow(4, $i)->getValue() ?: null;
+					$schedule= $objWorksheet->getCellByColumnAndRow(4, $i)->getValue() ?: null;
+					$rate= $objWorksheet->getCellByColumnAndRow(4, $i)->getValue() ?: null;
 			
 					if (!empty($product_name) && !empty($company_name)) {
 						// Get company_id
-						$company_id = $this->Supplier_product_model->get_entry_by_data("company", true, array('company_name' => $company_name), "company_name");
+						$company_id = $this->Supplier_product_model->get_entry_by_data("company", true, array('company_name' => $company_name), "company_name, company_id");
 				
 						// Get product_info
-						$product_info = $this->Supplier_product_model->get_entry_by_data("product", true, array('product_name' => $product_name), "product_name, product_id");
-				
+						$product_info = $this->Supplier_product_model->get_entry_by_data("product", true, array('product_name' => $product_name), "product_name, product_id, company_name");
 						$product_id = $product_info['product_id'];
-						//Get supplier Product 
-
-						$supplier_product = $this->Supplier_product_model->get_entry_by_data("product_synonyms", true, array('product_synonym' => $product_name), "id");
-						
-						if (($supplier_product !== null && $supplier_product !== false) || ($product_info !== null && $product_info !== false && $company_id !== null && $company_id !== false)) {
-
+						if(($product_info !== null && $product_info !== false && $company_id !== null && $company_id !== false)){
 							$necessary_data[] = array(
 								'existing_products' => $product_id,
 								'id' => $supplier_id
 							);
-							
-						} else {
-							// Unnecessary data
-							$unnecessary_data[] = array(
-								'product_name' => $product_name,
-								'company_name' => $company_name,
-								'supplier_id' => $supplier_id
+						}else if((!$product_info)  && $company_id !== null && $company_id !== false){
+							$date_added = date('Y-m-d H:i:s');
+							$product_data = array(
+							'product_name' => $product_name,
+						  'company_name' =>$company_id['company_id'],
+						  'packing_type' =>$packing_type,
+						  'pack_size' =>$pack_size, 
+						  'drug_name' =>$drug_name,
+						  'form' =>$form,
+						  'mrp' =>$mrp,
+						  'rate' =>$rate,
+						  'schedule' =>$schedule,
+						  'status' =>'1',
+						  'add_date'=>$date_added,
+						  'is_draft' => true
+						  );
+						  $save_product = $this->product_model->save_entry('product',$product_data);
+						  if($save_product!=''){
+							 $necessary_data[] = array(
+						  'existing_products' => $save_product,
+						  'id' => $supplier_id
+								  );
+								};
+						}else if($product_info == null && $product_info ==false && $company_id == null && $company_id == false){
+							$date_added = date('Y-m-d H:i:s');
+
+							$company_data = array('company_name'=>$company_name, 'date_added'=>$date_added,
+							'status' => 1,
+							'is_draft' => true
+						);
+						$save_company=$this->Company_model->save_entry('company',$company_data);
+						if($save_company!=''){
+						$company_neccassary_data[]=array('company_id' => $save_company,
+						'supplier_id' => $supplier_id);
+						}
+
+						$product_data = array(
+							'product_name' => $product_name,
+						  'company_name' =>$save_company,
+						  'packing_type' =>$packing_type,
+						  'pack_size' =>$pack_size, 
+						  'drug_name' =>$drug_name,
+						  'form' =>$form,
+						  'mrp' =>$mrp,
+						  'rate' =>$rate,
+						  'schedule' =>$schedule,
+						  'status' =>'1',
+						  'add_date'=>$date_added,
+						  'is_draft' => true
+						  );
+						  $save_product = $this->product_model->save_entry('product',$product_data);
+						  if($save_product!=''){
+							$necessary_data[] = array(
+						 'existing_products' => $save_product,
+						 'id' => $supplier_id);
+							   };
+						}else{
+							$necessary_data[] = array(
+								'existing_products' => $product_id,
+								'id' => $supplier_id
 							);
 						}
-					}
+
 				}
-				print_r($necessary_data);
-						print_r($unnecessary_data);
-	
+			
 				// Save necessary data
 				if (!empty($necessary_data)) {
 					$this->Supplier_product_model->save_bulk_entry('supplier_product', $necessary_data);
@@ -173,7 +225,7 @@ class Supplier extends CI_Controller
 				if (file_exists($file_path)) {
 					unlink($file_path);
 				}
-	
+			}
 				$this->session->set_flashdata('succ', "Uploaded successfully");
 				echo json_encode(array('supplier_id' => $supplier_id, 'response' => '1'));
 			} else {
