@@ -122,17 +122,17 @@ class Supplier extends CI_Controller
 			if ($column1 == 'Product Name' && $column2 == 'Company Name') {
 				$company_neccassary_data = [];
 				$necessary_data = [];
-	
+				
 				for ($i = 2; $i <= $objWorksheet->getHighestRow(); $i++) {
 					$product_name = $objWorksheet->getCellByColumnAndRow(0, $i)->getValue();
 					$company_name = $objWorksheet->getCellByColumnAndRow(1, $i)->getValue();
 					$drug_name = $objWorksheet->getCellByColumnAndRow(2, $i)->getValue() ?: null;
 					$form = $objWorksheet->getCellByColumnAndRow(3, $i)->getValue() ?: null;
 					$pack_size = $objWorksheet->getCellByColumnAndRow(4, $i)->getValue() ?: null;
-					$packing_type= $objWorksheet->getCellByColumnAndRow(4, $i)->getValue() ?: null;
-					$mrp= $objWorksheet->getCellByColumnAndRow(4, $i)->getValue() ?: null;
-					$schedule= $objWorksheet->getCellByColumnAndRow(4, $i)->getValue() ?: null;
-					$rate= $objWorksheet->getCellByColumnAndRow(4, $i)->getValue() ?: null;
+					$packing_type= $objWorksheet->getCellByColumnAndRow(5, $i)->getValue() ?: null;
+					$mrp= $objWorksheet->getCellByColumnAndRow(6, $i)->getValue() ?: null;
+					$schedule= $objWorksheet->getCellByColumnAndRow(7, $i)->getValue() ?: null;
+					$rate= $objWorksheet->getCellByColumnAndRow(8, $i)->getValue() ?: null;
 			
 					if (!empty($product_name) && !empty($company_name)) {
 						// Get company_id
@@ -146,7 +146,8 @@ class Supplier extends CI_Controller
 								'existing_products' => $product_id,
 								'id' => $supplier_id
 							);
-						}else if((!$product_info)  && $company_id !== null && $company_id !== false){
+						}else if(($product_info == null || $product_info == false)  && $company_id !== null && $company_id !== false){
+
 							$date_added = date('Y-m-d H:i:s');
 							$product_data = array(
 							'product_name' => $product_name,
@@ -169,7 +170,7 @@ class Supplier extends CI_Controller
 						  'id' => $supplier_id
 								  );
 								};
-						}else if($product_info == null && $product_info ==false && $company_id == null && $company_id == false){
+						}else if(($product_info == null || $product_info ==false) && ($company_id == null || $company_id == false)){
 							$date_added = date('Y-m-d H:i:s');
 
 							$company_data = array('company_name'=>$company_name, 'date_added'=>$date_added,
@@ -178,7 +179,7 @@ class Supplier extends CI_Controller
 						);
 						$save_company=$this->Company_model->save_entry('company',$company_data);
 						if($save_company!=''){
-						$company_neccassary_data[]=array('company_id' => $save_company,
+						$company_neccassary_data[] =array('company_id' => $save_company,
 						'supplier_id' => $supplier_id);
 						}
 
@@ -203,6 +204,7 @@ class Supplier extends CI_Controller
 						 'id' => $supplier_id);
 							   };
 						}else{
+
 							$necessary_data[] = array(
 								'existing_products' => $product_id,
 								'id' => $supplier_id
@@ -210,15 +212,14 @@ class Supplier extends CI_Controller
 						}
 
 				}
-			
 				// Save necessary data
 				if (!empty($necessary_data)) {
 					$this->Supplier_product_model->save_bulk_entry('supplier_product', $necessary_data);
 				}
 	
-				// Save unnecessary data
-				if (!empty($unnecessary_data)) {
-					$this->Draft_product_model->save_bulk_entry('draft_product', $unnecessary_data);
+				// Save company data
+				if (!empty($company_neccassary_data)) {
+					$this->Supplier_company_model->store_bulk_entry('supplier_company', $company_neccassary_data);
 				}
 	
 				// Clean up: delete the uploaded file
@@ -687,15 +688,41 @@ class Supplier extends CI_Controller
 		{
 			$this->check_admin_login();
 			
-			$where = array('supplier_id' => $id);
-			$data = $this->Draft_product_model->GetRecord('draft_product', $where);
-		
-			// Create two separate data arrays
-			$dataWithFull = $data;  // This one contains the full data
+			$Supplier_data = $this->Supplier_product_model->GetRecord('supplier_product', array('supplier_id' => $id));
+			$productIds = array();
+			foreach ($Supplier_data as $item) {
+				$productIds[] = $item['product_id'];
+			}
+
+			if (!empty($productIds)) {
+				$where = array('product_id' => $productIds, 'is_draft' => 1);
+				$data = $this->Supplier_model->GetMultipleRecord('product', $where);  
+				$dataWithFull = $data;  // This one contains the full data
+			} 	
 			$SupplierId = $id;  // This one contains only the extracted supplier_id
 		
 			$this->get_header('Add Products');
 			$this->load->view('backend/supplier/AddProducts', array('dataWithFull' => $dataWithFull, 'SupplierId' => $SupplierId));
+			$this->load->view('inc/footer'); 
+		}
+		public function ShowSupplierProduct($id)
+		{
+			$this->check_admin_login();
+			
+			$Supplier_data = $this->Supplier_product_model->GetRecord('supplier_product', array('supplier_id' => $id));
+			$productIds = array();
+			foreach ($Supplier_data as $item) {
+				$productIds[] = $item['product_id'];
+			}
+
+			if (!empty($productIds)) {
+				$where = array('product_id' => $productIds);
+				$data = $this->Supplier_model->GetMultipleRecord('product', $where);  
+				$dataWithFull = $data;  // This one contains the full data
+			} 	
+			$SupplierId = $id;  // This one contains only the extracted supplier_id
+			$this->get_header('Add Products');
+			$this->load->view('backend/supplier/ShowSupplierProduct', array('dataWithFull' => $dataWithFull, 'SupplierId' => $SupplierId));
 			$this->load->view('inc/footer'); 
 		}
 

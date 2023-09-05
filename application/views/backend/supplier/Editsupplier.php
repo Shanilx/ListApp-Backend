@@ -62,6 +62,7 @@
                 <?php $id = $edit_supplier[0]['supplier_id']; ?>
 
                  <a href="<?php echo base_url(); ?>apanel/Supplier/AddBulkProduct/<?php echo $id; ?>" style="padding: 0px;"><button class="btn btn-success __web-inspector-hide-shortcut__" type="button"><i class="fa fa-plus"></i> Add Product </button></a>          
+                 <a href="<?php echo base_url(); ?>apanel/SupplierProduct/<?php echo $id; ?>" style="padding: 0px;"><button class="btn btn-info __web-inspector-hide-shortcut__" type="button"> Show Supplier Product </button></a>          
                   </header>
 
             <div class="panel-body">

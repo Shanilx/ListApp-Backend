@@ -97,7 +97,26 @@ class Supplier_product_model extends CI_Model {
         return;
     }
     
-    
+    function GetRecord($table,$where='',$orderby='', $sort='',$where_like=array()) {
+
+        $this->db->select('*');
+        $this->db->from($table);
+        if(!empty($where))
+        {
+            $this->db->where($where);
+        }
+        if(!empty($where_like))
+        {
+            $this->db->like($where_like);
+        }
+        if(!empty($orderby))
+        {
+            $this->db->order_by($orderby, $sort);
+        }
+        $query = $this->db->get();
+        //echo $this->db->last_query();
+        return $query->result_array();
+    }
        
     
     function UpdateData($table,$data,$where)

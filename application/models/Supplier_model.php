@@ -29,6 +29,27 @@ public function __construct()
         //echo $this->db->last_query();
         return $query->result_array();
     }
+    function GetMultipleRecord($table,$where='',$orderby='', $sort='') {
+
+        $this->db->select('*');
+        $this->db->from($table);
+        if (!empty($where)) {
+            foreach ($where as $key => $value) {
+                if (is_array($value)) {
+                    $this->db->where_in($key, $value);
+                } else {
+                    $this->db->where($key, $value);
+                }
+            }
+        }
+        if(!empty($orderby))
+        {
+            $this->db->order_by($orderby, $sort);
+        }
+        $query = $this->db->get();
+        //echo $this->db->last_query();
+        return $query->result_array();
+    }
 
   function GetSupplierProduct($table, $where = array(), $orderby = '', $sort = '') {
     $this->db->select('*');
