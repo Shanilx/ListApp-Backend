@@ -76,7 +76,7 @@
                     <div class="col-md-12">
                         <div class="panel panel-info">
                             <div class="panel-heading">
-                                <h3 class="panel-title">Products List</h3>
+                                <h3 class="panel-title">Supplier Products List</h3>
                                 <div class="pull-right">
                                     <span class="clickable filter" data-toggle="tooltip" title="Toggle table filter"
                                         data-container="body">
@@ -91,7 +91,12 @@
                                         <th>#</th>
                                         <th>Product Name</th>
                                         <th>Company Name</th>
-                                        <th>Action </th>
+                                        <th>Drug Name</th>
+                                        <th>Form</th>
+                                        <th>Pack Size</th>
+                                        <th>Packing Type</th>
+                                        <th>MRP</th>
+                                        <th>Rate</th>
                                     </tr>
                                 </thead>
 
@@ -102,20 +107,13 @@
                                         <td><?php echo $index + 1; ?></td>
                                         <td><?php echo $item['product_name']; ?></td>
                                         <td><?php echo $item['company_name']; ?></td>
-                                        <td>
-                                            <!-- Button to open the modal -->
-                                            <button class="btn btn-primary open-modal-btn" data-toggle="modal"
-                                                data-target="#productModal"
-                                                data-id="<?php echo $item['product_name']; ?>">
-                                                Map Existing Product
-                                            </button>
+                                        <td><?php echo !empty($item['drug_name']) ? $item['drug_name'] : 'NULL'; ?></td>
+                                        <td><?php echo !empty($item['form']) ? $item['form'] : 'NULL'; ?></td>
+                                        <td><?php echo !empty($item['pack_size']) ? $item['pack_size'] : 'NULL'; ?></td>
+                                        <td><?php echo !empty($item['packing_type']) ? $item['packing_type'] : 'NULL'; ?></td>
+                                        <td><?php echo $item['mrp']; ?></td>
+                                        <td><?php echo $item['rate']; ?></td>
 
-                                            <a href="<?php echo base_url('apanel/Supplier/Product/' . $item['id']); ?>">
-                                                <button type="button" class="btn btn-success">
-                                                    <i class="fa fa-plus"></i> Create New Product
-                                                </button>
-                                            </a>
-                                        </td>
                                     </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -134,26 +132,6 @@
                                             </button>
                                         </div>
 
-                                        <!-- Modal Body -->
-                                        <div class="modal-body">
-                                            <!-- Replace with the content you want to display -->
-                                            <h4 id="modal-content" class="font-weight-bold"></h4>
-                                            <label for="Related Product">Related Product</label>
-                                            <form action="<?php echo base_url(); ?>apanel/Supplier/Product/synonym/Add"
-                                                method="post">
-                                                <input type="hidden" name="id" value="<?php echo $SupplierId; ?>">
-                                                <input type="hidden" id="synonym_product_name" name="synonym_product">
-                                                <input type="text" class="form-control" id="product_name"
-                                                    name="product_name" placeholder="Product Name">
-                                                <div id="product_name_sug_box"></div>
-                                                <button type="submit" class="btn btn-primary btn-outline"
-                                                    style="margin-top:10px;">
-                                                    Confirm Mapping
-                                                </button>
-                                            </form>
-                                        </div>
-
-                                        <!-- Modal Footer -->
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-dismiss="modal">Close</button>
